@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ithaca Share</title>
   <meta name="description" content="Sourced, one-page proposals for what Cornell could fund in Ithaca.">
+  <meta name="updated" content="October 16, 2026">
   <meta name="theme-color" content="#f3f0e8">
   <link rel="canonical" href="https://ithacashare.org/">
 
@@ -26,14 +27,8 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <nav class="site-nav" aria-label="Site">
-    <a class="nav-brand" href="/" aria-current="page"><span class="mark" aria-hidden="true"></span>Ithaca Share</a>
-    <div class="nav-links">
-        <a href="/wastewater/">Wastewater plant</a>
-        <a href="/survivor-services/">Survivor services</a>
-    </div>
-  </nav>
-  <main>
+  <nav data-include="nav"></nav>
+  <main id="main">
     <div class="column">
       <h1>What Cornell could fund in Ithaca</h1>
       <p class="lede">
@@ -57,35 +52,6 @@
 
     </div>
   </main>
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div>
-        <h2>Act</h2>
-        <ul>
-          <li><a href="mailto:council@cityofithaca.org">Write to Ithaca Common Council</a></li>
-          <li><button class="share" type="button" hidden>Share this page</button></li>
-          <li><button class="print" type="button">Print this page</button></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Get help</h2>
-        <ul>
-          <li>Emergency: <a href="tel:911">911</a></li>
-          <li>National Sexual Assault Hotline: <a href="tel:+18006564673">800-656-4673</a>, any time</li>
-          <li><a href="https://share.cornell.edu/getcare/help-anytime">Cornell’s list of 24-hour local resources</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>About</h2>
-        <ul>
-          <li>Independent community page. Not affiliated with Cornell University.</li>
-          <li>Updated October&nbsp;16, 2026.</li>
-          <li><a href="mailto:hello@ithacashare.org">hello@ithacashare.org</a></li>
-          <li><a href="https://github.com/ithacashare/IthacaShare.org/issues/new?template=correction.yml">Suggest a correction</a> · <a href="https://github.com/ithacashare/IthacaShare.org">Source and change history</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-  <script src="/site.js" defer></script>
+  <footer data-include="footer"></footer>
 </body>
 </html>
