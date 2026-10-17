@@ -1,11 +1,15 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ithacashare",
+  "main": "src/index.js",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
   "routes": [
-    { "pattern": "ithacashare.org", "custom_domain": true }
+    { "pattern": "ithacashare.org", "custom_domain": true },
+    { "pattern": "www.ithacashare.org", "custom_domain": true }
   ]
 }
