@@ -63,6 +63,13 @@ export default {
           page.canonical = el.getAttribute("href") ?? "";
         },
       })
+      .on("a[data-council]", {
+        element(el) {
+          const subject = encodeURIComponent(page.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
+          el.setAttribute("href", `mailto:council@cityofithaca.org?subject=${subject}&body=${encodeURIComponent(page.canonical || url.href)}`);
+          el.removeAttribute("data-council");
+        },
+      })
       .on('[data-include="nav"]', {
         element(el) {
           el.replace(nav.replace(`href="${url.pathname}"`, `href="${url.pathname}" aria-current="page"`), { html: true });

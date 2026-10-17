@@ -1031,3 +1031,49 @@ th[scope="row"] {
     display: none;
   }
 }
+
+/* Call to action: one button under each request. Cornell red, or ink on survivor pages. */
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 1rem 0 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.6rem 1.25rem;
+  background: var(--cornell-red);
+  color: #fff;
+  font-size: 1.1875rem; /* bold 19px is large text: 4.5:1 on Cornell red */
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--red);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.button.quiet {
+  background: var(--ink);
+}
+
+.button.quiet:hover {
+  background: #000;
+}
+
+.cta span {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+@media print {
+  .cta {
+    display: none;
+  }
+}
