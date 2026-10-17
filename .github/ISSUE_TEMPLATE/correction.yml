@@ -1,30 +1,18 @@
 name: Correction
-description: Report a figure, date, or claim on the page that is wrong or out of date.
+description: Something on the page is wrong or out of date.
 title: "Correction: "
 labels: ["[Area] Content"]
 body:
   - type: textarea
-    id: claim
-    attributes:
-      label: What the page says
-      description: Copy the sentence or figure.
-    validations:
-      required: true
-  - type: textarea
     id: correction
     attributes:
-      label: What it should say
+      label: What's wrong, and what should it say?
     validations:
       required: true
   - type: input
     id: source
     attributes:
       label: Source
-      description: A link to where the correct figure is published.
       placeholder: https://
     validations:
       required: true
-  - type: textarea
-    id: notes
-    attributes:
-      label: Anything else
