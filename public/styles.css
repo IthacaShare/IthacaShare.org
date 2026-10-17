@@ -1,0 +1,221 @@
+:root {
+  --paper: #f3f0e8;
+  --ink: #1a1814;
+  --muted: #5e584e;
+  --red: #b31b1b;
+  --on-red: #fff7f5;
+  --rule: #d8d1c4;
+  --speck: #141210;
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+main {
+  padding-bottom: 4rem;
+}
+
+/* Poster */
+
+.poster-screen {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.poster {
+  container-type: inline-size;
+  aspect-ratio: 1;
+  width: min(92vw, calc(100svh - 2rem), 46rem);
+  margin: 0;
+  background: var(--red);
+  color: var(--on-red);
+  padding: clamp(1.25rem, 4cqw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.poster a {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.poster h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 8cqw, 4.5rem);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.poster-sub {
+  margin: 1rem 0 0;
+  max-width: 28ch;
+  font-size: 1.125rem;
+  line-height: 1.375;
+  opacity: 0.9;
+}
+
+.poster-foot {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.poster-foot p {
+  margin: 0;
+  max-width: 28ch;
+  font-size: 1rem;
+  line-height: 1.375;
+}
+
+/* The dot's side is the poster's side divided by sqrt(area ratio). */
+.poster-dot {
+  width: calc(100cqw / var(--pay-ratio));
+  height: calc(100cqw / var(--pay-ratio));
+  background: var(--speck);
+  flex: none;
+}
+
+/* Text column */
+
+.column {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .column {
+    padding: 0 2rem;
+  }
+}
+
+section {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+section p {
+  margin: 1rem 0 0;
+  text-wrap: pretty;
+}
+
+.lede {
+  margin: 2.5rem 0 0;
+  text-wrap: pretty;
+}
+
+.qa {
+  margin: 0.75rem 0 0;
+}
+
+.qa dt {
+  margin-top: 1.25rem;
+  font-weight: 600;
+}
+
+.qa dt:first-child {
+  margin-top: 0;
+}
+
+.qa dd {
+  margin: 0.25rem 0 0;
+  text-wrap: pretty;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.plain {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.plain > li + li {
+  margin-top: 0.5rem;
+}
+
+.sources > li + li {
+  margin-top: 1rem;
+}
+
+.sources p {
+  margin: 0;
+}
+
+.link {
+  color: var(--red);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 4px;
+}
+
+.sources .link {
+  display: inline-block;
+  margin-top: 0.125rem;
+}
+
+footer {
+  margin-top: 3rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+footer a {
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 4px;
+}
+
+footer span {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
