@@ -219,3 +219,47 @@ footer span {
   white-space: nowrap;
   border: 0;
 }
+
+/* Print: poster on page one, text after, source URLs written out */
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+
+  main {
+    padding-bottom: 0;
+  }
+
+  .poster-screen {
+    min-height: 0;
+    padding: 0;
+    break-after: page;
+  }
+
+  .poster {
+    width: 100%;
+  }
+
+  .poster-sub,
+  .poster-foot p {
+    max-width: 40ch;
+  }
+
+  .column {
+    max-width: none;
+    padding: 0;
+  }
+
+  .sources .link::after {
+    content: " " attr(href);
+    color: var(--muted);
+    word-break: break-all;
+  }
+}
