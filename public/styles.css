@@ -852,3 +852,260 @@ section p + p,
 .poster-sub {
   opacity: 1;
 }
+
+/* Research-brief typography: footnoted claims, quiet links, oldstyle figures in prose */
+
+.column p,
+.column li,
+.column dd {
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+table,
+.poster,
+.in-short {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.column {
+  max-width: 34rem;
+}
+
+.fn {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  margin-left: 0.1em;
+  font-variant-numeric: lining-nums;
+}
+
+.fn a {
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0 0.1em;
+}
+
+.fn a:hover {
+  text-decoration: underline;
+}
+
+.fn + .fn {
+  margin-left: 0.05em;
+}
+
+section h2 {
+  margin-bottom: 0;
+}
+
+section {
+  margin-top: 3.5rem;
+}
+
+ol.sources {
+  margin: 1rem 0 0;
+  padding-left: 1.75rem;
+  font-size: 1rem;
+  font-variant-numeric: lining-nums;
+}
+
+ol.sources li + li {
+  margin-top: 1rem;
+}
+
+ol.sources li::marker {
+  color: var(--red);
+  font-weight: 600;
+}
+
+ol.sources p {
+  margin: 0;
+  color: var(--ink);
+}
+
+ol.sources li:target {
+  background: #fff;
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+}
+
+ol.sources .link {
+  color: var(--muted);
+}
+
+/* The request stands alone near the top */
+.column > .callout {
+  margin-top: 1.5rem;
+}
+
+@media print {
+  ol.sources .link::after {
+    content: " " attr(href);
+    color: var(--muted);
+    word-break: break-all;
+  }
+}
+
+/* Survivor pages: calm. No red except the exit. */
+.callout.quiet {
+  border-left-color: var(--ink);
+}
+
+.has-exit .fn a,
+.has-exit ol.sources li::marker {
+  color: var(--ink);
+}
+
+.has-exit .nav-links a[aria-current="page"] {
+  text-decoration-color: var(--ink);
+}
+
+/* Homepage cards lead with each proposal's idea */
+.proposals a {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.25rem;
+  align-items: start;
+}
+
+.proposals a > h2,
+.proposals a > p {
+  grid-column: 2;
+}
+
+.card-figure {
+  grid-row: 1 / span 2;
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+}
+
+/* Same ratio as the poster: side / sqrt(439 / 5.125) */
+.card-ww {
+  background: var(--red);
+  align-items: flex-end;
+  padding: 0.5rem;
+}
+
+.card-ww span {
+  width: calc(4.5rem / sqrt(439000000 / 5125000));
+  aspect-ratio: 1;
+  background: var(--speck);
+  box-shadow: inset 0 0 0 1px var(--on-red);
+}
+
+.card-sv {
+  background: var(--ink);
+  color: var(--paper);
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  font-variant-numeric: lining-nums;
+}
+
+.has-exit .proposals a,
+.proposals li:nth-child(2) a {
+  border-left-color: var(--ink);
+}
+
+@media (max-width: 30rem) {
+  .proposals a {
+    grid-template-columns: 1fr;
+  }
+
+  .proposals a > h2,
+  .proposals a > p,
+  .card-figure {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .card-figure {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.fn { margin-left: 0.05em; }
+
+/* One grid: nav, content, and footer share the same edges.
+   Prose is capped near 65 characters a line; tables and boxes use the full width. */
+.column {
+  max-width: 46rem;
+  padding: 0 1.25rem;
+}
+
+.column p,
+.column li,
+.column dd,
+.column dt,
+.column > h1 {
+  max-width: 41rem;
+}
+
+.proposals li,
+ol.sources li {
+  max-width: none;
+}
+
+.proposals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1rem;
+}
+
+.proposals > li + li {
+  margin-top: 0;
+}
+
+.proposals a {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Stacked cards keep a comfortable measure */
+.proposals {
+  display: block;
+}
+
+.proposals > li + li {
+  margin-top: 1rem;
+}
+
+.proposals a {
+  grid-template-columns: 5rem 1fr;
+  column-gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.card-figure {
+  width: 5rem;
+  height: 5rem;
+}
+
+.card-ww span {
+  width: calc(5rem / sqrt(439000000 / 5125000));
+}
+
+/* Footer: even rhythm; tap areas grow with invisible padding, not layout */
+.site-footer li > a,
+.site-footer button {
+  display: inline;
+  min-height: 0;
+  padding-block: 0.6rem;
+}
+
+.site-footer li {
+  line-height: 1.5;
+}
+
+.site-footer li + li {
+  margin-top: 0.75rem;
+}
+
+/* Wide screens: the exit button sits outside the nav, so the nav stays aligned */
+@media (min-width: 72rem) {
+  .has-exit .site-nav {
+    padding-right: 1.25rem;
+  }
+}

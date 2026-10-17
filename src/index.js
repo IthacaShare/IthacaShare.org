@@ -44,7 +44,9 @@ export default {
       .on('[data-include="footer"]', {
         element(el) {
           const subject = encodeURIComponent(title.replace(/^Ithaca Share: ?/, "").replace(/&rsquo;|&#x27;/g, "’") || "Cornell and Ithaca");
-          let html = footer.replace("{subject}", subject).replace("{url}", encodeURIComponent(canonical));
+          const file = url.pathname.endsWith("/") ? `${url.pathname}index.html` : url.pathname;
+          const edit = `https://github.com/ithacashare/IthacaShare.org/edit/main/public${file}`;
+          let html = footer.replace("{subject}", subject).replace("{url}", encodeURIComponent(canonical)).replace("{edit}", edit);
           html = updated ? html.replace("{updated}", updated) : html.replace(/\s*<li>Updated \{updated\}\.<\/li>/, "");
           el.replace(html, { html: true });
         },
