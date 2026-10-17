@@ -6,7 +6,8 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": true
+    "run_worker_first": true,
+    "not_found_handling": "404-page"
   },
   "routes": [
     { "pattern": "ithacashare.org", "custom_domain": true },
