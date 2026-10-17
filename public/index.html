@@ -28,8 +28,8 @@
 <body>
   <main>
     <div class="poster-screen">
-      <!-- --pay-ratio = sqrt(endowment / voluntary) = sqrt(11.8e9 / 5.125e6) -->
-      <figure class="poster" style="--pay-ratio: 47.98">
+      <!-- Dot side = poster side / sqrt(big / small). Edit the two amounts to resize it. -->
+      <figure class="poster" style="--pay-ratio: sqrt(11800000000 / 5125000)">
         <div>
           <h1>
             <a href="https://statements.cornell.edu/2025/20251028-university-endowment.cfm">$11.8 billion.</a><br>
@@ -184,7 +184,7 @@
   <script>
     // Native share sheet where supported, otherwise copy the link.
     const button = document.querySelector(".share");
-    const url = "https://ithacashare.org/";
+    const url = document.querySelector('link[rel="canonical"]').href;
     if (navigator.share || navigator.clipboard) {
       button.hidden = false;
       button.addEventListener("click", async () => {

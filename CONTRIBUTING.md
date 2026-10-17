@@ -17,7 +17,7 @@ Then open http://localhost:8787.
 - State facts plainly. Skip adjectives, predictions, and claims about anyone's motives.
 - Give every date a year, and avoid words like "now", "this year", or "upcoming" so the page stays accurate as time passes.
 - Update the "Updated" date in the footer with each content change.
-- If a figure changes, update it everywhere it appears, including the meta description and the dot size (`--pay-ratio` in `index.html` is the square root of endowment divided by voluntary payments).
+- If a figure changes, update it everywhere it appears, including the meta description, the two amounts in `--pay-ratio` in `index.html`, and `og/og.html` (then run `npm run og`).
 
 ## Making a change
 

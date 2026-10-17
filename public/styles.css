@@ -56,13 +56,14 @@ main {
 }
 
 .poster {
+  --pad: clamp(1.25rem, 4svw, 2.75rem);
   container-type: inline-size;
   aspect-ratio: 1;
   width: min(92vw, calc(100svh - 2rem), 46rem);
   margin: 0;
   background: var(--red);
   color: var(--on-red);
-  padding: clamp(1.25rem, 4cqw, 2.75rem);
+  padding: var(--pad);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -103,10 +104,10 @@ main {
   line-height: 1.375;
 }
 
-/* The dot's side is the poster's side divided by sqrt(area ratio). */
+/* The dot's side is the poster's full side divided by sqrt(area ratio). */
 .poster-dot {
-  width: calc(100cqw / var(--pay-ratio));
-  height: calc(100cqw / var(--pay-ratio));
+  width: calc((100cqw + 2 * var(--pad)) / var(--pay-ratio));
+  height: calc((100cqw + 2 * var(--pad)) / var(--pay-ratio));
   background: var(--speck);
   flex: none;
 }
