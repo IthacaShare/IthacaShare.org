@@ -1,3 +1,5 @@
+/* Ithaca Share. One stylesheet for every page; colors meet WCAG AAA (7:1). */
+
 @font-face {
   font-family: "Source Serif 4";
   font-style: normal;
@@ -10,12 +12,20 @@
   --paper: #f3f0e8;
   --ink: #1a1814;
   --muted: #4f4a42;
-  --red: #961717;
+  --cornell-red: #b31b1b; /* fills and large text */
+  --red: #961717; /* small text: Cornell red, darkened to meet 7:1 */
   --on-red: #fff7f5;
   --rule: #d8d1c4;
   --speck: #141210;
+  --footer-label: #d6cfc2;
+  --footer-underline: #6b645a;
   --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --measure: 41rem; /* about 65 characters a line */
+  --page: 46rem;
+  --gutter: 1.25rem;
 }
+
+/* Base */
 
 *,
 *::before,
@@ -29,107 +39,23 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 1.125rem;
-  line-height: 1.5;
+  font-size: 1.1875rem;
+  line-height: 1.6;
+}
+
+main {
+  flex: 1;
 }
 
 a {
   color: inherit;
-}
-
-main {
-  padding-bottom: 4rem;
-}
-
-/* Poster */
-
-.poster-screen {
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.poster {
-  --pad: clamp(1.25rem, 4svw, 2.75rem);
-  container-type: inline-size;
-  aspect-ratio: 1;
-  width: min(92vw, calc(100svh - 2rem), 46rem);
-  margin: 0;
-  background: var(--red);
-  color: var(--on-red);
-  padding: var(--pad);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.poster a {
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-  text-decoration-thickness: 1px;
-}
-
-.poster h1 {
-  margin: 0;
-  font-size: clamp(2.4rem, 8cqw, 4.5rem);
-  line-height: 1;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-
-.poster-sub {
-  margin: 1rem 0 0;
-  max-width: 28ch;
-  font-size: 1.125rem;
-  line-height: 1.375;
-  opacity: 0.9;
-}
-
-.poster-foot {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.75rem;
-}
-
-.poster-foot p {
-  margin: 0;
-  max-width: 28ch;
-  font-size: 1rem;
-  line-height: 1.375;
-}
-
-/* The dot's side is the poster's full side divided by sqrt(area ratio). */
-.poster-dot {
-  width: calc((100cqw + 2 * var(--pad)) / var(--pay-ratio));
-  height: calc((100cqw + 2 * var(--pad)) / var(--pay-ratio));
-  background: var(--speck);
-  flex: none;
-}
-
-/* Text column */
-
-.column {
-  max-width: 36rem;
-  margin: 0 auto;
-  padding: 0 1.25rem;
-}
-
-@media (min-width: 640px) {
-  .column {
-    padding: 0 2rem;
-  }
-}
-
-section {
-  margin-top: 2.5rem;
-  border-top: 1px solid var(--rule);
-  padding-top: 1.5rem;
 }
 
 h2 {
@@ -138,15 +64,294 @@ h2 {
   font-weight: 600;
 }
 
-section p {
-  margin: 1rem 0 0;
+h1,
+h2,
+dt {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+td,
+figcaption {
   text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.print-only {
+  display: none;
+}
+
+/* Header */
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -4rem;
+  z-index: 20;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  width: 100%;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0.9rem var(--gutter);
+  border-bottom: 1px solid var(--rule);
+  font-size: 1rem;
+}
+
+.site-nav a {
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.mark {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  background: var(--cornell-red) linear-gradient(var(--speck), var(--speck)) no-repeat 18% 82% / 22% 22%;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+}
+
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+}
+
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--ink);
+  text-decoration: underline 2px var(--cornell-red);
+  text-underline-offset: 6px;
+}
+
+/* Footer */
+
+.site-footer {
+  margin-top: 4rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 1rem;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 2rem;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 2.5rem var(--gutter) 3rem;
+}
+
+.site-footer h2 {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--footer-label);
+}
+
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer li {
+  line-height: 1.5;
+}
+
+.site-footer li + li {
+  margin-top: 0.75rem;
+}
+
+/* Tap areas grow with invisible padding, not layout. */
+.site-footer a {
+  padding-block: 0.6rem;
+  text-decoration: underline var(--footer-underline);
+  text-underline-offset: 4px;
+}
+
+.site-footer a:hover {
+  text-decoration-color: var(--paper);
+}
+
+.site-footer :focus-visible {
+  outline-color: #fff;
+}
+
+/* Page column: nav, content, and footer share one grid; prose keeps a reading measure. */
+
+.column {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.column p,
+.column li,
+.column dd,
+.column dt,
+.column > h1 {
+  max-width: var(--measure);
+}
+
+.column p,
+.column li,
+.column dd {
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+.column > h1 {
+  margin: 2.5rem 0 0;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .lede {
   margin: 2.5rem 0 0;
-  text-wrap: pretty;
+  font-size: 1.25rem;
+  line-height: 1.5;
 }
+
+.column > p + p {
+  margin-top: 1.5em;
+}
+
+.link {
+  color: var(--red);
+  text-decoration: underline var(--rule);
+  text-underline-offset: 4px;
+}
+
+/* Sections: page title > section heading > body > secondary notes */
+
+section {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid var(--ink);
+}
+
+section h2 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+section p {
+  margin: 1rem 0 0;
+}
+
+section p + p {
+  margin-top: 1.5em;
+}
+
+section h2 + p,
+section h2 + ul,
+section h2 + table,
+section h2 + dl {
+  margin-top: 0.75rem;
+}
+
+.secondary {
+  border-top: 1px solid var(--rule);
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.secondary h2 {
+  font-size: 1.125rem;
+  color: var(--ink);
+}
+
+.plain {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.plain > li + li {
+  margin-top: 0.5rem;
+}
+
+/* Summary and request boxes */
+
+.in-short {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.in-short h2 {
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.in-short p {
+  margin: 0.5rem 0 0;
+}
+
+.callout {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-left: 6px solid var(--cornell-red);
+  background: #fff;
+}
+
+.callout.quiet {
+  border-left-color: var(--ink);
+}
+
+/* Questions */
 
 .qa {
   margin: 0.75rem 0 0;
@@ -163,158 +368,20 @@ section p {
 
 .qa dd {
   margin: 0.25rem 0 0;
-  text-wrap: pretty;
 }
 
-.share {
-  margin-left: 0.5rem;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: var(--red);
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-underline-offset: 4px;
-  cursor: pointer;
+.qa dd + dt {
+  margin-top: 1.5em;
 }
 
-.print-only {
-  display: none;
-}
-
-.muted {
-  color: var(--muted);
-}
-
-.plain {
-  list-style: none;
-  margin: 0.75rem 0 0;
-  padding: 0;
-}
-
-.plain > li + li {
-  margin-top: 0.5rem;
-}
-
-.sources > li + li {
-  margin-top: 1rem;
-}
-
-.sources p {
-  margin: 0;
-}
-
-.link {
-  color: var(--red);
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-underline-offset: 4px;
-}
-
-.sources .link {
-  display: inline-block;
-  margin-top: 0.125rem;
-}
-
-footer {
-  margin-top: 3rem;
-  font-size: 0.875rem;
-  color: var(--muted);
-}
-
-footer a {
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-underline-offset: 4px;
-}
-
-footer span {
-  display: block;
-  margin-top: 0.25rem;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Print: poster on page one, text after, source URLs written out */
-
-@media print {
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  body {
-    background: #fff;
-    font-size: 11pt;
-  }
-
-  main {
-    padding-bottom: 0;
-  }
-
-  .poster-screen {
-    min-height: 0;
-    padding: 0;
-    flex-direction: column;
-    align-items: stretch;
-    break-after: page;
-  }
-
-  .print-qr {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    font-size: 14pt;
-  }
-
-  .share {
-    display: none;
-  }
-
-  .poster {
-    width: 100%;
-  }
-
-  .poster-sub,
-  .poster-foot p {
-    max-width: 40ch;
-  }
-
-  .column {
-    max-width: none;
-    padding: 0;
-  }
-
-  .sources .link::after {
-    content: " " attr(href);
-    color: var(--muted);
-    word-break: break-all;
-  }
-}
-
-.archived {
-  color: var(--muted);
-  font-size: 0.875em;
-}
+/* Table */
 
 table {
   width: 100%;
   margin-top: 0.75rem;
   border-collapse: collapse;
   font-size: 1rem;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 th,
@@ -327,46 +394,322 @@ td {
 
 th {
   font-weight: 600;
-  color: var(--muted);
   font-size: 0.875rem;
+  color: var(--muted);
 }
 
-td:last-child,
-th:last-child {
-  text-align: right;
+th:last-child,
+td:last-child {
   padding-right: 0;
+  text-align: right;
 }
 
-.sources-list summary {
-  cursor: pointer;
-  list-style: none;
+/* Footnotes and sources */
+
+.fn {
+  margin-left: 0.05em;
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  font-variant-numeric: lining-nums;
 }
 
-.sources-list summary::-webkit-details-marker {
-  display: none;
-}
-
-.sources-list summary h2 {
-  display: inline;
-}
-
-.sources-list summary h2::after {
-  content: " +";
-  color: var(--muted);
-  font-weight: 400;
-}
-
-.sources-list[open] summary h2::after {
-  content: " −";
-}
-
-.draft {
-  margin: 1.5rem 0 0;
-  padding: 0.5rem 0.75rem;
-  border: 1px dashed var(--red);
+.fn a {
+  padding: 0 0.1em;
   color: var(--red);
-  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
 }
+
+.fn a:hover {
+  text-decoration: underline;
+}
+
+ol.sources {
+  margin: 1rem 0 0;
+  padding-left: 1.75rem;
+  font-size: 1rem;
+  font-variant-numeric: lining-nums;
+}
+
+ol.sources li {
+  max-width: none;
+}
+
+ol.sources li + li {
+  margin-top: 1rem;
+}
+
+ol.sources li::marker {
+  color: var(--red);
+  font-weight: 600;
+}
+
+ol.sources li:target {
+  background: #fff;
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+}
+
+ol.sources p {
+  margin: 0;
+  color: var(--ink);
+}
+
+ol.sources .link {
+  display: inline-block;
+  margin-top: 0.125rem;
+  color: var(--muted);
+}
+
+.archived {
+  color: var(--muted);
+  font-size: 0.875em;
+}
+
+/* Poster: the endowment payout as a red square, local payments as a black square, same scale */
+
+.poster-screen {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.poster {
+  --pad: clamp(1.25rem, 4svw, 2.75rem);
+  container-type: inline-size;
+  aspect-ratio: 1;
+  width: min(92vw, calc(100svh - 2rem), var(--page));
+  margin: 0;
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--cornell-red);
+  color: var(--on-red);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.poster a {
+  text-decoration: underline 1px;
+  text-underline-offset: 0.18em;
+}
+
+.poster :focus-visible {
+  outline-color: #fff;
+}
+
+.poster h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 8cqw, 4.5rem);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.poster-sub {
+  margin: 1rem 0 0;
+  font-size: 1.5rem; /* 24px is large text: 4.5:1 on Cornell red */
+  line-height: 1.3 !important;
+}
+
+.poster-foot {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.poster-foot p {
+  margin: 0;
+  font-size: 1.1875rem;
+  font-weight: 700; /* bold 19px+ is large text: 4.5:1 on Cornell red */
+}
+
+.poster-sub,
+.poster-foot p {
+  max-width: 40ch;
+  line-height: 1.5;
+}
+
+/* Side = the poster's full side / sqrt(area ratio). The inner edge keeps the exact area. */
+.poster-dot {
+  flex: none;
+  width: calc((100cqw + 2 * var(--pad)) / var(--pay-ratio));
+  height: calc((100cqw + 2 * var(--pad)) / var(--pay-ratio));
+  background: var(--speck);
+  box-shadow: inset 0 0 0 1px var(--on-red);
+}
+
+/* Homepage cards lead with each proposal's idea */
+
+.proposals {
+  margin-top: 2rem;
+}
+
+.proposals > li + li {
+  margin-top: 1rem;
+}
+
+.proposals li {
+  max-width: none;
+}
+
+.proposals a {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  column-gap: 1.5rem;
+  align-items: start;
+  padding: 1.5rem;
+  border-left: 6px solid var(--cornell-red);
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.proposals li:nth-child(2) a {
+  border-left-color: var(--ink);
+}
+
+.proposals a:hover h2,
+.proposals a:focus-visible h2 {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.proposals h2 {
+  grid-column: 2;
+  font-size: 1.375rem;
+  line-height: 1.2;
+}
+
+.proposals p {
+  grid-column: 2;
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+.card-figure {
+  grid-row: 1 / span 2;
+  display: flex;
+  width: 5rem;
+  height: 5rem;
+}
+
+/* Same ratio as the poster */
+.card-ww {
+  align-items: flex-end;
+  padding: 0.5rem;
+  background: var(--cornell-red);
+}
+
+.card-ww span {
+  width: calc(5rem / sqrt(439000000 / 5125000));
+  aspect-ratio: 1;
+  background: var(--speck);
+  box-shadow: inset 0 0 0 1px var(--on-red);
+}
+
+.card-sv {
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 1rem;
+  font-variant-numeric: lining-nums;
+}
+
+@media (max-width: 30rem) {
+  .proposals a {
+    grid-template-columns: 1fr;
+  }
+
+  .proposals h2,
+  .proposals p,
+  .card-figure {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .card-figure {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* A week, hour by hour: shaded hours are when Cornell's own advocates work */
+
+.week {
+  margin: 2.5rem 0 0;
+}
+
+.week-chart {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  grid-template-rows: clamp(9.5rem, 32vw, 14rem) auto;
+  gap: 0.4rem 0.6rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variant-numeric: lining-nums;
+}
+
+.week-days {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  align-items: center;
+  line-height: 1;
+}
+
+.week-grid {
+  position: relative;
+  background: var(--rule);
+}
+
+/* Weekdays 9 to 5: columns 9 to 17 of 24, rows 1 to 5 of 7 */
+.week-grid::before {
+  content: "";
+  position: absolute;
+  left: calc(100% * 9 / 24);
+  width: calc(100% * 8 / 24);
+  top: 0;
+  height: calc(100% * 5 / 7);
+  background: var(--ink);
+}
+
+/* Hour and day lines */
+.week-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(to right, transparent 0 calc(100% / 24 - 2px), var(--paper) calc(100% / 24 - 2px) calc(100% / 24)),
+    repeating-linear-gradient(to bottom, transparent 0 calc(100% / 7 - 3px), var(--paper) calc(100% / 7 - 3px) calc(100% / 7));
+}
+
+.week-hours {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 30rem) {
+  .week-chart {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    font-size: 0.75rem;
+  }
+}
+
+.week figcaption {
+  margin-top: 1rem;
+  max-width: var(--measure);
+}
+
+.week figcaption strong {
+  font-size: 1.25rem;
+}
+
+/* Survivor pages: calm, no red except the exit */
 
 .help {
   margin-top: 1.5rem;
@@ -384,354 +727,8 @@ th:last-child {
   font-weight: 600;
 }
 
-.column > h1 {
-  margin: 2rem 0 0;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  line-height: 1.1;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.proposals {
-  margin-top: 2rem;
-}
-
-.proposals > li + li {
-  margin-top: 1rem;
-}
-
-.proposals a {
-  display: block;
-  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-  border-left: 6px solid var(--red);
-  background: #fff;
-  text-decoration: none;
-}
-
-.proposals a:hover h2,
-.proposals a:focus-visible h2 {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.proposals p {
-  margin: 0.35rem 0 0;
-  color: var(--muted);
-}
-
-/* No single-word last lines: balance headings, avoid orphans in text. */
-h1,
-h2,
-dt,
-summary {
-  text-wrap: balance;
-}
-
-p,
-li,
-dd,
-td,
-figcaption,
-.poster-foot p {
-  text-wrap: pretty;
-}
-
-/* Hierarchy: page title > section heading > body > secondary notes */
-
-.column > h1,
-.brand {
-  margin: 2.5rem 0 0;
-  font-size: clamp(2rem, 6vw, 2.75rem);
-  line-height: 1.08;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.mark {
-  width: 0.8em;
-  height: 0.8em;
-  flex: none;
-  background: var(--red);
-  background-image: linear-gradient(var(--speck), var(--speck));
-  background-size: 22% 22%;
-  background-position: 18% 82%;
-  background-repeat: no-repeat;
-}
-
-.lede {
-  font-size: 1.25rem;
-  line-height: 1.45;
-  color: var(--ink);
-}
-
-section {
-  margin-top: 3rem;
-  padding-top: 1.25rem;
-  border-top: 2px solid var(--ink);
-}
-
-section h2 {
-  font-size: 1.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-
-section h2 + p,
-section h2 + ul,
-section h2 + table,
-section h2 + dl {
-  margin-top: 0.75rem;
-}
-
-.callout {
-  margin-top: 1.5rem;
-  padding: 1rem 1.25rem;
-  border-left: 6px solid var(--red);
-  background: #fff;
-  font-size: 1.1875rem;
-}
-
-.secondary {
-  border-top: 1px solid var(--rule);
-  font-size: 1rem;
-  color: var(--muted);
-}
-
-.secondary h2,
-.sources-list summary h2 {
-  font-size: 1.125rem;
-  color: var(--ink);
-}
-
-.proposals h2 {
-  font-size: 1.375rem;
-  line-height: 1.2;
-}
-
-.proposals a {
-  color: var(--ink);
-}
-
-@media print {
-  section {
-    border-top-width: 1px;
-  }
-
-  .callout {
-    background: none;
-  }
-}
-
-/* Site navigation */
-
-.site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: 0.9rem 1.25rem;
-  border-bottom: 1px solid var(--rule);
-  font-size: 1rem;
-}
-
-.site-nav a {
-  text-decoration: none;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-}
-
-.nav-brand .mark {
-  width: 1.1rem;
-  height: 1.1rem;
-}
-
-.nav-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
-}
-
-.nav-links a {
-  color: var(--muted);
-}
-
-.nav-links a:hover,
-.nav-links a[aria-current="page"] {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--red);
-  text-underline-offset: 6px;
-  text-decoration-thickness: 2px;
-}
-
-/* Poster still fits the first screen under the nav */
-.site-nav + main .poster-screen {
-  min-height: calc(100svh - 3.25rem);
-}
-
-.site-nav + main .poster {
-  width: min(92vw, calc(100svh - 5.25rem), 46rem);
-}
-
-@media print {
-  .site-nav {
-    display: none;
-  }
-}
-
-/* Site footer */
-
-.site-footer {
-  margin-top: 4rem;
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 1rem;
-}
-
-.footer-inner {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-  gap: 2rem;
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 3rem;
-}
-
-.site-footer h2 {
-  margin: 0 0 0.75rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #d6cfc2;
-}
-
-.site-footer ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.site-footer li + li {
-  margin-top: 0.5rem;
-}
-
-.site-footer a,
-.site-footer button {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: #6b645a;
-  text-underline-offset: 4px;
-}
-
-.site-footer a:hover,
-.site-footer button:hover {
-  text-decoration-color: var(--paper);
-}
-
-.site-footer button {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  cursor: pointer;
-}
-
-main {
-  padding-bottom: 0;
-}
-
-@media print {
-  .site-footer {
-    display: none;
-  }
-}
-
-/* Footer sits at the bottom on short pages */
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100svh;
-}
-
-main {
-  flex: 1;
-}
-
-.site-nav {
-  width: 100%;
-}
-
-@media print {
-  body {
-    display: block;
-  }
-}
-
-@media print {
-  .site-nav + main .poster-screen {
-    min-height: 0;
-  }
-
-  .site-nav + main .poster {
-    width: 100%;
-  }
-}
-
-/* Quick exit for pages about sexual violence */
-
-.quick-exit {
-  position: fixed;
-  top: 0.6rem;
-  right: 0.6rem;
-  z-index: 10;
-  padding: 0.55rem 0.9rem;
-  background: var(--red);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
-}
-
-.quick-exit:hover,
-.quick-exit:focus-visible {
-  background: var(--ink);
-}
-
-.quick-exit span {
-  font-weight: 400;
-  opacity: 0.85;
-}
-
-.has-exit .site-nav {
-  padding-right: 11rem;
-}
-
-@media (max-width: 40rem) {
-  .has-exit .site-nav {
-    padding-right: 1.25rem;
-    padding-top: 3.4rem;
-  }
-
-  .quick-exit span {
-    display: none;
-  }
+.help :focus-visible {
+  outline-color: #fff;
 }
 
 .exit-note {
@@ -740,215 +737,31 @@ main {
   opacity: 0.8;
 }
 
-@media print {
-  .quick-exit,
-  .exit-note {
-    display: none;
-  }
+.quick-exit {
+  position: fixed;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.55rem 0.9rem;
+  background: var(--cornell-red);
+  color: #fff;
+  font-size: 1.1875rem; /* bold 19px is large text: 4.5:1 */
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
 }
 
-/* Readability and accessibility (WCAG AAA) */
-
-body {
-  font-size: 1.1875rem;
-  line-height: 1.6;
-}
-
-section p + p,
-.column > p + p,
-.qa dd + dt {
-  margin-top: 1.5em;
-}
-
-.lede {
-  line-height: 1.5;
-}
-
-.in-short {
-  margin-top: 2rem;
-  padding: 1.25rem 1.5rem;
-  background: #fff;
-  border: 1px solid var(--rule);
-}
-
-.in-short h2 {
-  margin: 0;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.in-short p {
-  margin: 0.5rem 0 0;
-  font-size: 1.1875rem;
-}
-
-.poster-sub,
-.poster-foot p {
-  max-width: 40ch;
-  line-height: 1.5;
-}
-
-/* The scaled square keeps its exact area; a light inner edge separates it from the red. */
-.poster-dot {
-  box-shadow: inset 0 0 0 1px var(--on-red);
-}
-
-/* Visible keyboard focus everywhere */
-:focus-visible {
-  outline: 3px solid var(--ink);
-  outline-offset: 3px;
-}
-
-.poster :focus-visible,
-.site-footer :focus-visible,
-.help :focus-visible,
+.quick-exit:hover,
 .quick-exit:focus-visible {
+  background: var(--ink);
   outline-color: #fff;
 }
 
-.skip-link {
-  position: absolute;
-  left: 0.5rem;
-  top: -4rem;
-  z-index: 20;
-  padding: 0.75rem 1rem;
-  background: var(--ink);
-  color: #fff;
-  font-weight: 600;
-}
-
-.skip-link:focus {
-  top: 0.5rem;
-}
-
-/* Tap targets at least 44px */
-.nav-brand,
-.nav-links a,
-.site-footer li > a,
-.site-footer button,
-.share,
-.quick-exit,
-.sources-list summary {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.nav-brand {
-  display: flex;
-}
-
-.site-footer li + li {
-  margin-top: 0.25rem;
-}
-
-.quick-exit {
-  gap: 0.35em;
-}
-
-.poster-sub {
-  opacity: 1;
-}
-
-/* Research-brief typography: footnoted claims, quiet links, oldstyle figures in prose */
-
-.column p,
-.column li,
-.column dd {
-  font-variant-numeric: oldstyle-nums proportional-nums;
-}
-
-table,
-.poster,
-.in-short {
-  font-variant-numeric: lining-nums tabular-nums;
-}
-
-.column {
-  max-width: 34rem;
-}
-
-.fn {
-  font-size: 0.7em;
-  line-height: 0;
-  vertical-align: super;
-  margin-left: 0.1em;
-  font-variant-numeric: lining-nums;
-}
-
-.fn a {
-  color: var(--red);
-  font-weight: 600;
-  text-decoration: none;
-  padding: 0 0.1em;
-}
-
-.fn a:hover {
-  text-decoration: underline;
-}
-
-.fn + .fn {
-  margin-left: 0.05em;
-}
-
-section h2 {
-  margin-bottom: 0;
-}
-
-section {
-  margin-top: 3.5rem;
-}
-
-ol.sources {
-  margin: 1rem 0 0;
-  padding-left: 1.75rem;
-  font-size: 1rem;
-  font-variant-numeric: lining-nums;
-}
-
-ol.sources li + li {
-  margin-top: 1rem;
-}
-
-ol.sources li::marker {
-  color: var(--red);
-  font-weight: 600;
-}
-
-ol.sources p {
-  margin: 0;
-  color: var(--ink);
-}
-
-ol.sources li:target {
-  background: #fff;
-  outline: 2px solid var(--red);
-  outline-offset: 6px;
-}
-
-ol.sources .link {
-  color: var(--muted);
-}
-
-/* The request stands alone near the top */
-.column > .callout {
-  margin-top: 1.5rem;
-}
-
-@media print {
-  ol.sources .link::after {
-    content: " " attr(href);
-    color: var(--muted);
-    word-break: break-all;
-  }
-}
-
-/* Survivor pages: calm. No red except the exit. */
-.callout.quiet {
-  border-left-color: var(--ink);
+.has-exit .site-nav {
+  padding-right: 11rem;
 }
 
 .has-exit .fn a,
@@ -960,152 +773,85 @@ ol.sources .link {
   text-decoration-color: var(--ink);
 }
 
-/* Homepage cards lead with each proposal's idea */
-.proposals a {
-  display: grid;
-  grid-template-columns: 4.5rem 1fr;
-  column-gap: 1.25rem;
-  align-items: start;
-}
-
-.proposals a > h2,
-.proposals a > p {
-  grid-column: 2;
-}
-
-.card-figure {
-  grid-row: 1 / span 2;
-  width: 4.5rem;
-  height: 4.5rem;
-  display: flex;
-}
-
-/* Same ratio as the poster: side / sqrt(439 / 5.125) */
-.card-ww {
-  background: var(--red);
-  align-items: flex-end;
-  padding: 0.5rem;
-}
-
-.card-ww span {
-  width: calc(4.5rem / sqrt(439000000 / 5125000));
-  aspect-ratio: 1;
-  background: var(--speck);
-  box-shadow: inset 0 0 0 1px var(--on-red);
-}
-
-.card-sv {
-  background: var(--ink);
-  color: var(--paper);
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 1rem;
-  font-variant-numeric: lining-nums;
-}
-
-.has-exit .proposals a,
-.proposals li:nth-child(2) a {
-  border-left-color: var(--ink);
-}
-
-@media (max-width: 30rem) {
-  .proposals a {
-    grid-template-columns: 1fr;
+@media (max-width: 40rem) {
+  .has-exit .site-nav {
+    padding-top: 3.4rem;
+    padding-right: var(--gutter);
   }
-
-  .proposals a > h2,
-  .proposals a > p,
-  .card-figure {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .card-figure {
-    margin-bottom: 0.75rem;
-  }
-}
-
-.fn { margin-left: 0.05em; }
-
-/* One grid: nav, content, and footer share the same edges.
-   Prose is capped near 65 characters a line; tables and boxes use the full width. */
-.column {
-  max-width: 46rem;
-  padding: 0 1.25rem;
-}
-
-.column p,
-.column li,
-.column dd,
-.column dt,
-.column > h1 {
-  max-width: 41rem;
-}
-
-.proposals li,
-ol.sources li {
-  max-width: none;
-}
-
-.proposals {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-  gap: 1rem;
-}
-
-.proposals > li + li {
-  margin-top: 0;
-}
-
-.proposals a {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-/* Stacked cards keep a comfortable measure */
-.proposals {
-  display: block;
-}
-
-.proposals > li + li {
-  margin-top: 1rem;
-}
-
-.proposals a {
-  grid-template-columns: 5rem 1fr;
-  column-gap: 1.5rem;
-  padding: 1.5rem;
-}
-
-.card-figure {
-  width: 5rem;
-  height: 5rem;
-}
-
-.card-ww span {
-  width: calc(5rem / sqrt(439000000 / 5125000));
-}
-
-/* Footer: even rhythm; tap areas grow with invisible padding, not layout */
-.site-footer li > a,
-.site-footer button {
-  display: inline;
-  min-height: 0;
-  padding-block: 0.6rem;
-}
-
-.site-footer li {
-  line-height: 1.5;
-}
-
-.site-footer li + li {
-  margin-top: 0.75rem;
 }
 
 /* Wide screens: the exit button sits outside the nav, so the nav stays aligned */
 @media (min-width: 72rem) {
   .has-exit .site-nav {
-    padding-right: 1.25rem;
+    padding-right: var(--gutter);
+  }
+}
+
+.draft {
+  margin: 1.5rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--red);
+  color: var(--red);
+  font-size: 0.875rem;
+}
+
+/* Print: the poster on page one, then the text, with source addresses written out */
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    display: block;
+    background: #fff;
+    font-size: 11pt;
+  }
+
+  .site-header,
+  .site-footer,
+  .quick-exit,
+  .exit-note {
+    display: none;
+  }
+
+  .poster-screen {
+    min-height: 0;
+    padding: 0;
+    flex-direction: column;
+    align-items: stretch;
+    break-after: page;
+  }
+
+  .poster {
+    width: 100%;
+  }
+
+  .print-qr {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-size: 14pt;
+  }
+
+  .column {
+    max-width: none;
+    padding: 0;
+  }
+
+  section {
+    border-top-width: 1px;
+  }
+
+  .callout {
+    background: none;
+  }
+
+  ol.sources .link::after {
+    content: " " attr(href);
+    color: var(--muted);
+    word-break: break-all;
   }
 }

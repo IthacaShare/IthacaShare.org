@@ -1,6 +1,7 @@
-// Redirect www to the apex domain. Serve public/, filling each page's
-// <nav data-include="nav"> and <footer data-include="footer"> from
-// public/_partials/ so every page shares one header and one footer.
+// Redirect www to the apex domain. Serve public/, completing each HTML page
+// from public/_partials/: the shared <head> tags, Open Graph tags built from
+// the page's own title, description, and canonical link, and the shared
+// header and footer. Pages hold only what is unique to them.
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -14,40 +15,68 @@ export default {
 
     const partial = (name) =>
       env.ASSETS.fetch(new URL(`/_partials/${name}`, url)).then((r) => r.text());
-    const [nav, footer] = await Promise.all([partial("nav"), partial("footer")]);
-    const current = nav.replace(`href="${url.pathname}"`, `href="${url.pathname}" aria-current="page"`);
-    let updated = "";
-    let title = "";
-    let canonical = url.origin + url.pathname;
+    const [head, nav, footer] = await Promise.all([partial("head"), partial("nav"), partial("footer")]);
+
+    const page = { title: "", description: "", canonical: "", updated: "" };
+    const attr = (value) => value.replace(/"/g, "&quot;");
 
     return new HTMLRewriter()
-      .on('meta[name="updated"]', {
+      .on("head", {
         element(el) {
-          updated = el.getAttribute("content") ?? "";
+          el.prepend('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n', { html: true });
+          el.onEndTag((end) => {
+            let tags = head;
+            if (page.canonical) {
+              tags += [
+                '<meta property="og:type" content="website">',
+                '<meta property="og:site_name" content="Ithaca Share">',
+                `<meta property="og:url" content="${attr(page.canonical)}">`,
+                `<meta property="og:title" content="${attr(page.title)}">`,
+                `<meta property="og:description" content="${attr(page.description)}">`,
+                '<meta property="og:image:type" content="image/jpeg">',
+                '<meta property="og:image:width" content="1200">',
+                '<meta property="og:image:height" content="630">',
+                '<meta name="twitter:card" content="summary_large_image">',
+              ].join("\n") + "\n";
+            }
+            end.before(tags, { html: true });
+          });
         },
       })
       .on("title", {
         text(chunk) {
-          title += chunk.text;
+          page.title += chunk.text;
+        },
+      })
+      .on('meta[name="description"]', {
+        element(el) {
+          page.description = el.getAttribute("content") ?? "";
+        },
+      })
+      .on('meta[name="updated"]', {
+        element(el) {
+          page.updated = el.getAttribute("content") ?? "";
         },
       })
       .on('link[rel="canonical"]', {
         element(el) {
-          canonical = el.getAttribute("href") ?? canonical;
+          page.canonical = el.getAttribute("href") ?? "";
         },
       })
       .on('[data-include="nav"]', {
         element(el) {
-          el.replace(current, { html: true });
+          el.replace(nav.replace(`href="${url.pathname}"`, `href="${url.pathname}" aria-current="page"`), { html: true });
         },
       })
       .on('[data-include="footer"]', {
         element(el) {
-          const subject = encodeURIComponent(title.replace(/^Ithaca Share: ?/, "").replace(/&rsquo;|&#x27;/g, "’") || "Cornell and Ithaca");
           const file = url.pathname.endsWith("/") ? `${url.pathname}index.html` : url.pathname;
-          const edit = `https://github.com/ithacashare/IthacaShare.org/edit/main/public${file}`;
-          let html = footer.replace("{subject}", subject).replace("{url}", encodeURIComponent(canonical)).replace("{edit}", edit);
-          html = updated ? html.replace("{updated}", updated) : html.replace(/\s*<li>Updated \{updated\}\.<\/li>/, "");
+          const subject = encodeURIComponent(page.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
+          let html = footer
+            .replace("{subject}", subject)
+            .replace("{url}", encodeURIComponent(page.canonical || url.href))
+            .replace("{edit}", `https://github.com/ithacashare/IthacaShare.org/edit/main/public${file}`);
+          html = page.updated ? html.replace("{updated}", page.updated) : html.replace(/\s*<li>Updated \{updated\}\.<\/li>/, "");
           el.replace(html, { html: true });
         },
       })
