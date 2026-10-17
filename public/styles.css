@@ -605,7 +605,7 @@ ol.sources .link {
 }
 
 .card-ww span {
-  width: calc(5rem / sqrt(439000000 / 5125000));
+  width: calc(5rem / sqrt(439000000 / 5075000));
   aspect-ratio: 1;
   background: var(--speck);
   box-shadow: inset 0 0 0 1px var(--on-red);
