@@ -126,8 +126,12 @@ figcaption {
   max-width: var(--page);
   margin: 0 auto;
   padding: 0.9rem var(--gutter);
-  border-bottom: 1px solid var(--rule);
   font-size: 1rem;
+}
+
+/* The rule runs edge to edge; the nav inside stays on the page grid */
+.site-header {
+  border-bottom: 1px solid var(--rule);
 }
 
 .site-nav a {
@@ -156,8 +160,8 @@ figcaption {
 }
 
 .nav-links a {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
+  padding-block: 0.6rem; /* 44px tap height */
   color: var(--muted);
 }
 
