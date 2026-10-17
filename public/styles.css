@@ -308,3 +308,54 @@ footer span {
   color: var(--muted);
   font-size: 0.875em;
 }
+
+table {
+  width: 100%;
+  margin-top: 0.75rem;
+  border-collapse: collapse;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 0.4rem 0.5rem 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+td:last-child,
+th:last-child {
+  text-align: right;
+  padding-right: 0;
+}
+
+.sources-list summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.sources-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.sources-list summary h2 {
+  display: inline;
+}
+
+.sources-list summary h2::after {
+  content: " +";
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.sources-list[open] summary h2::after {
+  content: " −";
+}
