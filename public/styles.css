@@ -303,3 +303,8 @@ footer span {
     word-break: break-all;
   }
 }
+
+.archived {
+  color: var(--muted);
+  font-size: 0.875em;
+}
