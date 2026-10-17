@@ -470,7 +470,7 @@ ol.sources .link {
 /* Poster: the endowment payout as a red square, local payments as a black square, same scale */
 
 .poster-screen {
-  min-height: 100svh;
+  min-height: calc(100svh - 4.6rem); /* first screen, under the header */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -481,7 +481,7 @@ ol.sources .link {
   --pad: clamp(1.25rem, 4svw, 2.75rem);
   container-type: inline-size;
   aspect-ratio: 1;
-  width: min(92vw, calc(100svh - 2rem), var(--page));
+  width: min(92vw, calc(100svh - 6.6rem), var(--page));
   margin: 0;
   padding: var(--pad);
   display: flex;
