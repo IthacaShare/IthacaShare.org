@@ -319,13 +319,13 @@ section h2 + dl {
   margin-top: 0.5rem;
 }
 
-/* Summary and request boxes */
+/* Summary box: the facts, then the request */
 
 .in-short {
   margin-top: 2rem;
   padding: 1.25rem 1.5rem;
   background: #fff;
-  border: 1px solid var(--rule);
+  border-left: 6px solid var(--cornell-red);
   font-variant-numeric: lining-nums tabular-nums;
 }
 
@@ -340,14 +340,11 @@ section h2 + dl {
   margin: 0.5rem 0 0;
 }
 
-.callout {
-  margin-top: 1.5rem;
-  padding: 1rem 1.25rem;
-  border-left: 6px solid var(--cornell-red);
-  background: #fff;
+.in-short p + p {
+  margin-top: 1rem;
 }
 
-.callout.quiet {
+.in-short.quiet {
   border-left-color: var(--ink);
 }
 
@@ -566,8 +563,8 @@ ol.sources .link {
 
 .proposals a {
   display: grid;
-  grid-template-columns: 5rem 1fr;
-  column-gap: 1.5rem;
+  grid-template-columns: 8rem 1fr;
+  column-gap: 1.75rem;
   align-items: start;
   padding: 1.5rem;
   border-left: 6px solid var(--cornell-red);
@@ -592,41 +589,64 @@ ol.sources .link {
   line-height: 1.2;
 }
 
-.proposals p {
+/* Bold 19px is large text, so Cornell red passes AAA */
+.card-stat {
+  grid-column: 2;
+  margin: 0.4rem 0 0;
+  color: var(--cornell-red);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  font-variant-numeric: lining-nums;
+}
+
+.proposals li:nth-child(2) .card-stat {
+  color: var(--ink);
+}
+
+.proposals p:not(.card-stat) {
   grid-column: 2;
   margin: 0.35rem 0 0;
   color: var(--muted);
 }
 
 .card-figure {
-  grid-row: 1 / span 2;
+  grid-row: 1 / span 3;
   display: flex;
-  width: 5rem;
-  height: 5rem;
+  width: 8rem;
 }
 
-/* Same ratio as the poster */
+/* Same scale as the poster */
 .card-ww {
+  height: 8rem;
   align-items: flex-end;
-  padding: 0.5rem;
+  padding: 0.6rem;
   background: var(--cornell-red);
 }
 
 .card-ww span {
-  width: calc(5rem / sqrt(439000000 / 5075000));
+  width: calc((8rem - 1.2rem) / sqrt(439000000 / 5075000));
   aspect-ratio: 1;
   background: var(--speck);
   box-shadow: inset 0 0 0 1px var(--on-red);
 }
 
+/* The week chart in miniature: 24 hours across, 7 days down */
 .card-sv {
-  align-items: center;
-  justify-content: center;
-  background: var(--ink);
-  color: var(--paper);
-  font-weight: 600;
-  font-size: 1rem;
-  font-variant-numeric: lining-nums;
+  position: relative;
+  height: calc(8rem * 7 / 24 * 1.6);
+  background:
+    linear-gradient(var(--ink), var(--ink)) calc(100% * 9 / 16) 0 / calc(100% * 8 / 24) calc(100% * 5 / 7) no-repeat,
+    var(--rule);
+}
+
+.card-sv::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(to right, transparent 0 calc(100% / 24 - 1px), #fff calc(100% / 24 - 1px) calc(100% / 24)),
+    repeating-linear-gradient(to bottom, transparent 0 calc(100% / 7 - 1px), #fff calc(100% / 7 - 1px) calc(100% / 7));
 }
 
 @media (max-width: 30rem) {
@@ -635,14 +655,19 @@ ol.sources .link {
   }
 
   .proposals h2,
-  .proposals p,
+  .proposals p.card-stat,
+  .proposals p:not(.card-stat),
   .card-figure {
     grid-column: 1;
     grid-row: auto;
   }
 
+  .in-short {
+    padding-inline: 1.25rem;
+  }
+
   .card-figure {
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -781,10 +806,15 @@ ol.sources .link {
   text-decoration-color: var(--ink);
 }
 
+/* Phones: the brand and the exit share the first row; links take the second */
 @media (max-width: 40rem) {
   .has-exit .site-nav {
-    padding-top: 3.4rem;
-    padding-right: var(--gutter);
+    flex-wrap: wrap;
+    padding-top: 1.1rem;
+  }
+
+  .has-exit .nav-links {
+    flex-basis: 100%;
   }
 }
 
@@ -853,7 +883,7 @@ ol.sources .link {
     border-top-width: 1px;
   }
 
-  .callout {
+  .in-short {
     background: none;
   }
 
@@ -881,11 +911,6 @@ ol.sources .link {
 
 .help li a {
   padding-block: 0.6rem;
-}
-
-/* Boxes span the column; only running text keeps the reading measure */
-.column > .callout {
-  max-width: none;
 }
 
 /* Phones: the poster holds only the headline and the two squares; the explanation sits below. */
