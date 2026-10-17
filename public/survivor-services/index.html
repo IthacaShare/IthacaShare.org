@@ -25,6 +25,13 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <nav class="site-nav" aria-label="Site">
+    <a class="nav-brand" href="/"><span class="mark" aria-hidden="true"></span>Ithaca Share</a>
+    <div class="nav-links">
+        <a href="/wastewater/">Wastewater plant</a>
+        <a href="/survivor-services/" aria-current="page">Survivor services</a>
+    </div>
+  </nav>
   <main>
     <div class="column">
       <aside class="help">
@@ -85,29 +92,49 @@
         </p>
       </section>
 
-      <section>
-        <h2>One option</h2>
-        <p>
-          A voluntary gift from Cornell to the off-campus service it refers people to, with the amount
+      <p class="callout">
+          <strong>One option:</strong> a voluntary gift from Cornell to the off-campus service it refers people to, with the amount
           and terms set with that organization.
         </p>
-      </section>
 
-      <section>
+      <section class="secondary">
         <h2>Method</h2>
         <p>
           This page uses Cornell’s own published sources. It names no individuals involved in any case.
         </p>
       </section>
 
-      <footer>
-        <a href="/">ithacashare.org</a>
-        <span>Updated October&nbsp;16, 2026.</span>
-        <span>Independent community page. Not affiliated with Cornell University.</span>
-        <span><a href="mailto:hello@ithacashare.org">hello@ithacashare.org</a></span>
-        <span><a href="https://github.com/ithacashare/IthacaShare.org">Source and change history</a> · <a href="https://github.com/ithacashare/IthacaShare.org/issues/new?template=correction.yml">Suggest a correction</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
-      </footer>
     </div>
   </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Act</h2>
+        <ul>
+          <li><a href="mailto:council@cityofithaca.org">Write to Ithaca Common Council</a></li>
+          <li><button class="share" type="button" hidden>Share this page</button></li>
+          <li><button class="print" type="button">Print this page</button></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Get help</h2>
+        <ul>
+          <li>Emergency: <a href="tel:911">911</a></li>
+          <li>National Sexual Assault Hotline: <a href="tel:+18006564673">800-656-4673</a>, any time</li>
+          <li><a href="https://share.cornell.edu/getcare/help-anytime">Cornell’s list of 24-hour local resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>About</h2>
+        <ul>
+          <li>Independent community page. Not affiliated with Cornell University.</li>
+          <li>Updated October&nbsp;16, 2026.</li>
+          <li><a href="mailto:hello@ithacashare.org">hello@ithacashare.org</a></li>
+          <li><a href="https://github.com/ithacashare/IthacaShare.org/issues/new?template=correction.yml">Suggest a correction</a> · <a href="https://github.com/ithacashare/IthacaShare.org">Source and change history</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="/site.js" defer></script>
 </body>
 </html>
