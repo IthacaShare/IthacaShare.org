@@ -359,3 +359,35 @@ th:last-child {
 .sources-list[open] summary h2::after {
   content: " −";
 }
+
+.draft {
+  margin: 1.5rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--red);
+  color: var(--red);
+  font-size: 0.875rem;
+}
+
+.help {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.help p {
+  margin: 0;
+}
+
+.help a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.column > h1 {
+  margin: 2rem 0 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
