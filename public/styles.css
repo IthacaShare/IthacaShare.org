@@ -962,3 +962,72 @@ ol.sources .link {
     min-width: 44px;
   }
 }
+
+.nowrap {
+  white-space: nowrap;
+}
+
+th[scope="row"] {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Phones: each university becomes a labeled block instead of a four-column table */
+@media (max-width: 34rem) {
+  table,
+  tbody,
+  tr,
+  th[scope="row"],
+  td {
+    display: block;
+  }
+
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  tr {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  th[scope="row"],
+  td {
+    padding: 0;
+    border: 0;
+  }
+
+  th[scope="row"] {
+    font-weight: 600;
+    font-size: 1.0625rem;
+  }
+
+  td {
+    text-align: right;
+  }
+
+  td::before {
+    content: attr(data-label);
+    float: left;
+    margin-right: 1rem;
+    color: var(--muted);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  td:last-child {
+    font-weight: 600;
+  }
+}
+
+/* Smallest phones: shorter nav label */
+@media (max-width: 23rem) {
+  .nav-long {
+    display: none;
+  }
+}
