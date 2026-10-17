@@ -13,3 +13,11 @@
 
 /apple-touch-icon.png
   Cache-Control: public, max-age=604800
+
+# Every page: no scripts, nothing third-party, no referrer sent to linked sites
+# (so a source site can't tell a visitor came from a page about sexual assault).
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
