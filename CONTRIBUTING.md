@@ -15,6 +15,8 @@ Then open http://localhost:8787.
 
 - Every figure needs a published source. Link it where the figure appears and add it to the Sources list.
 - State facts plainly. Skip adjectives, predictions, and claims about anyone's motives.
+- Give every date a year, and avoid words like "now", "this year", or "upcoming" so the page stays accurate as time passes.
+- Update the "Updated" date in the footer with each content change.
 - If a figure changes, update it everywhere it appears, including the meta description and the dot size (`--pay-ratio` in `index.html` is the square root of endowment divided by voluntary payments).
 
 ## Making a change
@@ -31,3 +33,7 @@ Commits must not include `Co-authored-by` trailers.
 Cloudflare Workers Builds is connected to this repo. A push to `main` deploys to ithacashare.org. Other branches get a preview build.
 
 To deploy by hand, run `npm run deploy`.
+
+## License
+
+By contributing, you agree your contribution is licensed under [CC BY 4.0](LICENSE).
