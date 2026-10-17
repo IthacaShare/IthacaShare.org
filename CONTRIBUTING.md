@@ -28,6 +28,6 @@ Commits must not include `Co-authored-by` trailers.
 
 ## Deploys
 
-Merging to `main` deploys to Cloudflare Workers through `.github/workflows/deploy.yml`. The workflow needs two repository secrets: `CLOUDFLARE_API_TOKEN` (with Workers edit permission) and `CLOUDFLARE_ACCOUNT_ID`.
+Cloudflare Workers Builds is connected to this repo. A push to `main` deploys to ithacashare.org. Other branches get a preview build.
 
 To deploy by hand, run `npm run deploy`.
