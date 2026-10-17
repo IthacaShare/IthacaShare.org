@@ -27,3 +27,17 @@ for (const link of document.querySelectorAll('a[href^="mailto:council@"]')) {
   const subject = encodeURIComponent(document.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
   link.href = `mailto:council@cityofithaca.org?subject=${subject}&body=${encodeURIComponent(url)}`;
 }
+
+// Quick exit: leave without adding this page to the back button, also on Esc.
+const exit = document.querySelector(".quick-exit");
+if (exit) {
+  const leave = (event) => {
+    event?.preventDefault();
+    document.body.hidden = true;
+    location.replace(exit.href);
+  };
+  exit.addEventListener("click", leave);
+  addEventListener("keydown", (event) => {
+    if (event.key === "Escape") leave(event);
+  });
+}

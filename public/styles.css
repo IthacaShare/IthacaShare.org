@@ -692,3 +692,57 @@ main {
     width: 100%;
   }
 }
+
+/* Quick exit for pages about sexual violence */
+
+.quick-exit {
+  position: fixed;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 10;
+  padding: 0.55rem 0.9rem;
+  background: var(--red);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+}
+
+.quick-exit:hover,
+.quick-exit:focus-visible {
+  background: var(--ink);
+}
+
+.quick-exit span {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.has-exit .site-nav {
+  padding-right: 11rem;
+}
+
+@media (max-width: 40rem) {
+  .has-exit .site-nav {
+    padding-right: 1.25rem;
+    padding-top: 3.4rem;
+  }
+
+  .quick-exit span {
+    display: none;
+  }
+}
+
+.exit-note {
+  margin-top: 0.6rem !important;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+@media print {
+  .quick-exit,
+  .exit-note {
+    display: none;
+  }
+}
