@@ -391,3 +391,30 @@ th:last-child {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+
+.proposals {
+  margin-top: 2rem;
+}
+
+.proposals > li + li {
+  margin-top: 1rem;
+}
+
+.proposals a {
+  display: block;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  border-left: 6px solid var(--red);
+  background: #fff;
+  text-decoration: none;
+}
+
+.proposals a:hover h2,
+.proposals a:focus-visible h2 {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.proposals p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}

@@ -1,6 +1,6 @@
 # ithacashare.org
 
-A one-page, sourced comparison of Cornell's endowment and its voluntary payments to Ithaca governments.
+Sourced, one-page proposals for what Cornell could fund in Ithaca. The homepage (`public/index.html`) lists them; each proposal is its own page, such as `public/wastewater/index.html`.
 
 ```sh
 npm install
@@ -13,9 +13,9 @@ Pushes to `main` deploy to Cloudflare Workers. See [CONTRIBUTING.md](CONTRIBUTIN
 
 This repo is a GitHub template for one-page, sourced sites on Cloudflare Workers. Click **Use this template**, then:
 
-1. In `public/index.html`, replace the text, figures, and sources. Set the domain in the canonical link, `og:url`, and `og:image`, the issues link in the footer, and the two amounts in `--pay-ratio`.
+1. Edit `public/index.html` (the list of proposals) and add one folder per proposal under `public/`. In each page, set the canonical link, `og:url`, `og:image`, the issues link in the footer, and, if it has a scaled square, the two amounts in `--pay-ratio`.
 2. In `wrangler.jsonc`, set `name` and the two custom domains.
-3. In `og/og.html`, set the amounts and domain, then run `npm run og` to rebuild `public/og.jpg` and `public/qr.svg`.
+3. Add `og/<page>.html` for each page (`og/home.html` is the homepage), then run `npm run og` to build each page's `og.jpg` and `qr.svg`.
 4. Copy the labels: `gh label clone ithacashare/IthacaShare.org -R owner/new-repo`.
 
 ## Cloudflare setup
