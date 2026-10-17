@@ -855,3 +855,27 @@ ol.sources .link {
     word-break: break-all;
   }
 }
+
+/* Help box: one resource per line, quick to act on */
+.help h2 {
+  font-size: 1.125rem;
+}
+
+.help ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.help li + li {
+  margin-top: 0.35rem;
+}
+
+.help li a {
+  padding-block: 0.6rem;
+}
+
+/* Boxes span the column; only running text keeps the reading measure */
+.column > .callout {
+  max-width: none;
+}
