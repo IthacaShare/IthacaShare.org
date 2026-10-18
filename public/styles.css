@@ -180,7 +180,7 @@ figcaption {
 
 .footer-inner {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: 2rem;
   max-width: var(--page);
   margin: 0 auto;
@@ -1264,9 +1264,14 @@ th[scope="row"] {
 
 
 
-/* Footer: the same call to action as on each page */
+/* Footer: the same call to action as on each page, on its own row above help and about */
+.footer-inner > :first-child {
+  grid-column: 1 / -1;
+}
+
 .site-footer .button {
   padding-block: 0.6rem;
+  white-space: nowrap;
   color: #fff;
   text-decoration: none;
 }
