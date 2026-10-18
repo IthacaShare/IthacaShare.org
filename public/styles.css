@@ -552,9 +552,13 @@ ol.sources .link {
   font-variant-numeric: lining-nums tabular-nums;
 }
 
-.poster a {
-  text-decoration: underline 1px;
-  text-underline-offset: 0.18em;
+/* Footnotes on the poster: small, white, like the rest of the site's footnotes */
+.poster .fn {
+  font-size: 0.4em;
+}
+
+.poster .fn a {
+  color: #fff;
 }
 
 .poster :focus-visible {
@@ -872,6 +876,14 @@ ol.sources .link {
   font-weight: 400;
   font-size: 0.9375rem;
   color: var(--muted);
+}
+
+/* Phones: each number is a full-width button under its name */
+@media (max-width: 30rem) {
+  .hotlines .call {
+    flex-basis: 100%;
+    justify-content: center;
+  }
 }
 
 /* Tap to call: a bordered button with the number in large, even figures */
