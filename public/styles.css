@@ -16,6 +16,7 @@
   --red: #961717; /* small text: Cornell red, darkened to meet 7:1 */
   --on-red: #fff7f5;
   --rule: #d8d1c4;
+  --hotline: #8c8273; /* week chart: the Advocacy Center hotline, 3:1 against paper and ink */
   --speck: #141210;
   --footer-label: #d6cfc2;
   --footer-underline: #6b645a;
@@ -210,7 +211,7 @@ figcaption {
 
 /* Tap areas grow with invisible padding, not layout. */
 .site-footer a {
-  padding-block: 0.6rem;
+  padding-block: 0.75rem; /* 44px tall: 2.5.5 Target Size (Enhanced) */
   text-decoration: underline var(--footer-underline);
   text-underline-offset: 4px;
 }
@@ -319,33 +320,95 @@ section h2 + dl {
   margin-top: 0.5rem;
 }
 
-/* Summary box: the facts, then the request */
+/* The request: one sentence, set large, marked like the cards it came from */
 
-.in-short {
-  margin-top: 2rem;
-  padding: 1.25rem 1.5rem;
-  background: #fff;
+.ask {
+  margin: 2.5rem 0 0;
+  padding-left: 1rem;
   border-left: 6px solid var(--cornell-red);
-  font-variant-numeric: lining-nums tabular-nums;
+  font-size: 1.375rem;
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
-.in-short h2 {
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.ask.quiet {
+  border-left-color: var(--ink);
+}
+
+/* Cornell's own words: the quote large, who said it and about what underneath */
+
+.quotes {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quotes li {
+  max-width: none;
+}
+
+.quotes li + li {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.quotes blockquote {
+  margin: 0;
+}
+
+.quotes blockquote p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-indent: -0.45em; /* hang the opening quote mark */
+  text-wrap: balance;
+}
+
+.quotes .cite,
+.quotes figcaption {
+  display: block;
+  margin-top: 0.25rem;
   color: var(--muted);
 }
 
-.in-short p {
-  margin: 0.5rem 0 0;
+/* One figure in a sentence, the figure in bold */
+.stat {
+  margin-top: 1.25rem;
 }
 
-.in-short p + p {
-  margin-top: 1rem;
+.stat strong {
+  font-size: 1.25rem;
 }
 
-.in-short.quiet {
-  border-left-color: var(--ink);
+/* Peer comparison: bar length is each university's share of endowment, Yale's the longest */
+
+.bars .bar {
+  display: inline-block;
+  width: calc(var(--share) / 0.068 * 8rem);
+  height: 0.75rem;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+  background: var(--ink);
+}
+
+.bars .yale { --share: 0.068; }
+.bars .cornell { --share: 0.043; }
+.bars .princeton { --share: 0.016; }
+
+.bars .this .bar {
+  background: var(--cornell-red);
+}
+
+.bars .this th,
+.bars .this td:last-child {
+  color: var(--red);
+}
+
+.bars td:last-child {
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Questions */
@@ -511,7 +574,7 @@ ol.sources .link {
 .poster-sub {
   margin: 1rem 0 0;
   font-size: 1.5rem; /* 24px is large text: 4.5:1 on Cornell red */
-  line-height: 1.3 !important;
+  line-height: 1.5 !important;
 }
 
 .poster-foot {
@@ -523,7 +586,7 @@ ol.sources .link {
 .poster-foot p {
   margin: 0;
   font-size: 1.5rem; /* 24px is large text: 4.5:1 on Cornell red */
-  line-height: 1.3 !important;
+  line-height: 1.5 !important;
 }
 
 /* Phones show a short bold label instead */
@@ -596,7 +659,7 @@ ol.sources .link {
   color: var(--cornell-red);
   font-size: 1.1875rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.5;
   font-variant-numeric: lining-nums;
 }
 
@@ -604,14 +667,14 @@ ol.sources .link {
   color: var(--ink);
 }
 
-.proposals p:not(.card-stat) {
+.proposals p:not(.card-stat, .kicker) {
   grid-column: 2;
   margin: 0.35rem 0 0;
   color: var(--muted);
 }
 
 .card-figure {
-  grid-row: 1 / span 3;
+  grid-row: 1 / span 5;
   display: flex;
   width: 8rem;
 }
@@ -637,7 +700,7 @@ ol.sources .link {
   height: calc(8rem * 7 / 24 * 1.6);
   background:
     linear-gradient(var(--ink), var(--ink)) calc(100% * 9 / 16) 0 / calc(100% * 8 / 24) calc(100% * 5 / 7) no-repeat,
-    var(--rule);
+    var(--hotline);
 }
 
 .card-sv::after {
@@ -656,15 +719,12 @@ ol.sources .link {
 
   .proposals h2,
   .proposals p.card-stat,
-  .proposals p:not(.card-stat),
+  .proposals p:not(.card-stat, .kicker),
   .card-figure {
     grid-column: 1;
     grid-row: auto;
   }
 
-  .in-short {
-    padding-inline: 1.25rem;
-  }
 
   .card-figure {
     margin-bottom: 1rem;
@@ -696,7 +756,7 @@ ol.sources .link {
 
 .week-grid {
   position: relative;
-  background: var(--rule);
+  background: var(--hotline);
 }
 
 /* Weekdays 9 to 5: columns 9 to 17 of 24, rows 1 to 5 of 7 */
@@ -738,53 +798,149 @@ ol.sources .link {
   max-width: var(--measure);
 }
 
-.week figcaption strong {
-  font-size: 1.25rem;
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Survivor pages: calm, no red except the exit */
+.legend li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.key {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  align-self: center;
+}
+
+.key-cornell {
+  background: var(--ink);
+}
+
+.key-ac {
+  background: var(--hotline);
+}
+
+
+/* Help box: an emergency-services directory. One row per line to call. */
 
 .help {
   margin-top: 1.5rem;
-  padding: 1rem 1.25rem;
-  background: var(--ink);
-  color: var(--paper);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-top: 0;
 }
 
-.help p {
+.help h2 {
   margin: 0;
+  padding: 0.6rem 1.25rem;
+  background: var(--red); /* white on --red is 8:1 */
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.help a {
-  color: inherit;
+.hotlines {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.25rem;
+}
+
+.hotlines li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  max-width: none;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hotlines .who {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.hotlines .when {
+  display: block;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+/* Tap to call: a bordered button with the number in large, even figures */
+.call {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.3rem 0.9rem;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-size: 1.375rem;
+  font-weight: 700;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.call:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+.urgent .call {
+  border-color: var(--red);
+  background: var(--red);
+  color: #fff;
+}
+
+.urgent .call:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.help-more {
+  margin: 0;
+  padding: 0.9rem 1.25rem 1rem;
+}
+
+.help-more a {
+  padding-block: 0.75rem;
+  color: var(--ink);
   font-weight: 600;
 }
 
-.help :focus-visible {
-  outline-color: #fff;
-}
-
-.exit-note {
-  margin-top: 0.6rem !important;
-  font-size: 0.875rem;
-  opacity: 0.8;
-}
-
+/* Quick exit (the GOV.UK "Exit this page" pattern). On phones and tablets it is a
+   bar along the bottom of the screen, so every page shares one header. On wide
+   screens it sits beside the content, top right. */
 .quick-exit {
   position: fixed;
-  top: 0.6rem;
-  right: 0.6rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 10;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  min-height: 44px;
+  justify-content: center;
+  min-height: 3.25rem;
   padding: 0.55rem 0.9rem;
   background: var(--cornell-red);
   color: #fff;
   font-size: 1.1875rem; /* bold 19px is large text: 4.5:1 */
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  box-shadow: 0 -2px 8px rgb(0 0 0 / 0.2);
 }
 
 .quick-exit:hover,
@@ -793,35 +949,22 @@ ol.sources .link {
   outline-color: #fff;
 }
 
-.has-exit .site-nav {
-  padding-right: 11rem;
+.has-exit {
+  padding-bottom: 3.25rem;
 }
 
-.has-exit .fn a,
-.has-exit ol.sources li::marker {
-  color: var(--ink);
-}
-
-.has-exit .nav-links a[aria-current="page"] {
-  text-decoration-color: var(--ink);
-}
-
-/* Phones: the brand and the exit share the first row; links take the second */
-@media (max-width: 40rem) {
-  .has-exit .site-nav {
-    flex-wrap: wrap;
-    padding-top: 1.1rem;
-  }
-
-  .has-exit .nav-links {
-    flex-basis: 100%;
-  }
-}
-
-/* Wide screens: the exit button sits outside the nav, so the nav stays aligned */
 @media (min-width: 72rem) {
-  .has-exit .site-nav {
-    padding-right: var(--gutter);
+  .quick-exit {
+    top: 0.6rem;
+    right: 0.6rem;
+    bottom: auto;
+    left: auto;
+    min-height: 44px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  }
+
+  .has-exit {
+    padding-bottom: 0;
   }
 }
 
@@ -850,11 +993,7 @@ ol.sources .link {
   .site-header,
   .site-footer,
   .quick-exit,
-  .exit-note {
-    display: none;
-  }
-
-  .poster-screen {
+    .poster-screen {
     min-height: 0;
     padding: 0;
     flex-direction: column;
@@ -883,34 +1022,12 @@ ol.sources .link {
     border-top-width: 1px;
   }
 
-  .in-short {
-    background: none;
-  }
 
   ol.sources .link::after {
     content: " " attr(href);
     color: var(--muted);
     word-break: break-all;
   }
-}
-
-/* Help box: one resource per line, quick to act on */
-.help h2 {
-  font-size: 1.125rem;
-}
-
-.help ul {
-  list-style: none;
-  margin: 0.5rem 0 0;
-  padding: 0;
-}
-
-.help li + li {
-  margin-top: 0.35rem;
-}
-
-.help li a {
-  padding-block: 0.6rem;
 }
 
 /* Phones: the poster holds only the headline and the two squares; the explanation sits below. */
@@ -1088,8 +1205,6 @@ th[scope="row"] {
 
 .button:hover {
   background: var(--red);
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .button.quiet {
@@ -1109,4 +1224,56 @@ th[scope="row"] {
   .cta {
     display: none;
   }
+}
+
+/* Homepage cards: program label, title, figure, request */
+.kicker {
+  grid-column: 2;
+  margin: 0 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-more {
+  grid-column: 2;
+  margin-top: 0.75rem;
+  color: var(--red);
+  font-weight: 700;
+}
+
+.card-more::after {
+  content: " \2192";
+}
+
+.proposals li:nth-child(2) .card-more {
+  color: var(--ink);
+}
+
+.proposals a:hover .card-more,
+.proposals a:focus-visible .card-more {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 30rem) {
+  .kicker,
+  .card-more {
+    grid-column: 1;
+  }
+}
+
+
+
+/* Footer: the same call to action as on each page */
+.site-footer .button {
+  padding-block: 0.6rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.site-footer .button:hover {
+  background: var(--red);
 }

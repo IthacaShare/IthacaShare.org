@@ -10,20 +10,24 @@
 </head>
 <body class="has-exit">
   <aside aria-label="Quick exit">
-  <a class="quick-exit" href="https://www.google.com/search?q=weather" rel="noreferrer">Leave this site</a>
+  <a class="quick-exit" href="https://www.weather.gov/" rel="noreferrer"><span class="sr-only">Emergency</span> Exit this page</a>
   </aside>
   <nav data-include="nav"></nav>
   <main id="main">
     <div class="column">
-      <aside class="help" aria-label="Get help now">
-        <h2>If you need help now</h2>
-        <ul>
-          <li>Emergency: <a href="tel:911" class="nowrap">911</a></li>
-          <li>Advocacy Center of Tompkins County, any time: <a href="tel:+16072775000" class="nowrap">607-277-5000</a></li>
-          <li>National Sexual Assault Hotline, any time: <a href="tel:+18006564673" class="nowrap">800-656-4673</a></li>
-          <li><a href="https://share.cornell.edu/getcare/help-anytime">Cornell’s list of 24-hour local resources</a></li>
+      <aside class="help" aria-labelledby="help-title">
+        <h2 id="help-title">If you need help now</h2>
+        <ul class="hotlines">
+          <li class="urgent">
+            <span class="who">Advocacy Center of Tompkins County <span class="when">Local, 24-hour hotline</span></span>
+            <a class="call" href="tel:+16072775000" aria-label="Call the Advocacy Center of Tompkins County, 607-277-5000">607-277-5000</a>
+          </li>
+          <li>
+            <span class="who">National Sexual Assault Hotline <span class="when">24 hours</span></span>
+            <a class="call" href="tel:+18006564673" aria-label="Call the National Sexual Assault Hotline, 800-656-4673">800-656-4673</a>
+          </li>
         </ul>
-        <p class="exit-note">“Leave this site” opens a weather search. It doesn’t clear your browsing history, and the back button can return here.</p>
+        <p class="help-more"><a href="https://share.cornell.edu/getcare/help-anytime">Cornell’s list of 24-hour local resources</a></p>
       </aside>
 
       <h1>Where Cornell refers survivors after hours</h1>
@@ -31,80 +35,44 @@
       <figure class="week">
         <div class="week-chart">
           <div class="week-days" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-          <div class="week-grid" role="img" aria-label="A week drawn as 168 hours. 40 are shaded: weekdays, 9 a.m. to 5 p.m."></div>
+          <div class="week-grid" role="img" aria-label="A week drawn as 168 hours. Cornell’s advocates cover 40: weekdays, 9 a.m. to 5 p.m. The Advocacy Center’s hotline covers all 168."></div>
           <div class="week-hours" aria-hidden="true"><span>12 a.m.</span><span>6 a.m.</span><span>Noon</span><span>6 p.m.</span><span>12 a.m.</span></div>
         </div>
         <figcaption>
-          <strong>40 of the week’s 168 hours.</strong> Shaded: when Cornell’s own advocates work.<sup class="fn"><a href="#s1" aria-label="Source 1: Cornell Health, Victim Advocacy">1</a>,<a href="#s2" aria-label="Source 2: Cornell SHARE, Help anytime">2</a></sup>
+          <ul class="legend">
+            <li><span class="key key-cornell" aria-hidden="true"></span><span><strong>Cornell’s own advocates:</strong> 40 hours<sup class="fn"><a href="#s1" aria-label="Source 1: Cornell Health, Victim Advocacy">1</a></sup></span></li>
+            <li><span class="key key-ac" aria-hidden="true"></span><span><strong>Advocacy Center hotline:</strong> all 168<sup class="fn"><a href="#s2" aria-label="Source 2: Cornell SHARE, Help anytime">2</a></sup></span></li>
+          </ul>
         </figcaption>
       </figure>
 
-      <div class="in-short quiet">
-        <h2>In short</h2>
-        <p>Cornell’s own advocates for victims of sexual violence work on weekdays only. For nights and weekends, Cornell’s list of resources includes the 24-hour hotline of the Advocacy Center of Tompkins County, an independent local organization. We found no published Cornell funding for it.</p>
-        <p><strong>One option:</strong> a voluntary gift from Cornell to the Advocacy Center, with the amount and terms set with the Advocacy Center.</p>
-      </div>
+      <p class="ask quiet"><strong>One option:</strong> a gift from Cornell to the Advocacy Center, on terms the Advocacy Center sets.</p>
       <p class="cta">
         <a class="button quiet" data-council href="mailto:council@cityofithaca.org">Write to Ithaca Common Council</a>
       </p>
 
       <section>
-        <h2>Cornell’s advocates work weekdays, 9 to 5</h2>
-        <p>
-          They serve “members of the Cornell community,” and Cornell’s page says the service is “not a crisis service.”<sup class="fn"><a href="#s1" aria-label="Source 1: Cornell Health, Victim Advocacy">1</a></sup>
-        </p>
+        <h2>In Cornell’s words</h2>
+        <ul class="quotes">
+          <li><blockquote><p>“Not a crisis service”</p></blockquote> <span class="cite">On its own advocates, who serve “members of the Cornell community.”<sup class="fn"><a href="#s1" aria-label="Source 1: Cornell Health, Victim Advocacy">1</a></sup></span></li>
+          <li><blockquote><p>“Off campus resource for students, staff, and faculty”</p></blockquote> <span class="cite">On the Advocacy Center’s 24-hour hotline.<sup class="fn"><a href="#s2" aria-label="Source 2: Cornell SHARE, Help anytime">2</a></sup></span></li>
+          <li><blockquote><p>“Independent of Cornell”</p></blockquote> <span class="cite">On the Advocacy Center. We found no published Cornell funding for it.<sup class="fn"><a href="#s3" aria-label="Source 3: Cornell, Campus Watch 2026 (archived)">3</a></sup></span></li>
+        </ul>
       </section>
 
-      <section>
-        <h2>After hours, Cornell refers people elsewhere</h2>
-        <p>
-          For help at any hour, Cornell lists the Advocacy Center’s 24-hour hotline as an “off campus resource for students, staff, and faculty.”<sup class="fn"><a href="#s2" aria-label="Source 2: Cornell SHARE, Help anytime">2</a></sup>  Friends and family who aren’t Cornell students or employees fall outside Cornell’s description of whom its advocates serve.<sup class="fn"><a href="#s1" aria-label="Source 1: Cornell Health, Victim Advocacy">1</a></sup>
-        </p>
-        <p>
-          Cornell’s 2026 security report describes the Advocacy Center as “independent of Cornell.”<sup class="fn"><a href="#s3" aria-label="Source 3: Cornell, Campus Watch 2026 (archived)">3</a></sup> We found no published Cornell funding for it.
-        </p>
-      </section>
-
-      <section>
-        <h2>Cornell’s own figures</h2>
-        <p>
-          Cornell’s reports under federal law list 28 rapes on campus, including residence halls, in 2023; 23 in 2024; and 6 in 2025.<sup class="fn"><a href="#s3" aria-label="Source 3: Cornell, Campus Watch 2026 (archived)">3</a></sup>
-        </p>
-        <p>
-          In Cornell’s 2025 survey,
-          35% of undergraduate women
-          reported nonconsensual sexual contact since coming to Cornell, up from 23% in 2023. Only 15%
-          of invited students responded, and Cornell says the results should be read with caution.<sup class="fn"><a href="#s4" aria-label="Source 4: Cornell Chronicle, November 4, 2025">4</a></sup>
-        </p>
-      </section>
-
-      <section>
-        <h2>Cornell has added support on campus</h2>
-        <p>
-          On October&nbsp;13, 2026, Cornell
-          announced added victim advocate support on campus.<sup class="fn"><a href="#s5" aria-label="Source 5: Cornell University statement, October 13, 2026">5</a></sup>
-          An outside review led by a former U.S. Deputy Attorney General will look at
-          “all related Cornell policies and practices.”<sup class="fn"><a href="#s5" aria-label="Source 5: Cornell University statement, October 13, 2026">5</a></sup>
-        </p>
-      </section>
-
-
-      <section>
-        <h2>Questions</h2>
-        <dl class="qa">
-
-          <dt>Would the money go to Cornell programs?</dt>
-          <dd>
-            No. The gift would go to the Advocacy Center, an independent organization, with the amount
-            and terms set with the Advocacy Center.
-          </dd>
-        </dl>
+      <section class="secondary">
+        <h2>Cornell’s reported figures</h2>
+        <ul class="plain">
+          <li>Rapes on campus reported under federal law: 28 in 2023, 23 in 2024, 6 in 2025.<sup class="fn"><a href="#s3" aria-label="Source 3: Cornell, Campus Watch 2026 (archived)">3</a></sup></li>
+          <li>In Cornell’s 2025 survey, 35% of undergraduate women reported nonconsensual sexual contact, up from 23% in 2023. Only 15% responded, and Cornell says to read the results with caution.<sup class="fn"><a href="#s4" aria-label="Source 4: Cornell Chronicle, November 4, 2025">4</a></sup></li>
+          <li>On October&nbsp;13, 2026, Cornell announced added victim advocate support on campus.<sup class="fn"><a href="#s5" aria-label="Source 5: Cornell University statement, October 13, 2026">5</a></sup></li>
+        </ul>
       </section>
 
       <section class="secondary">
         <h2>Method</h2>
         <p>
-          This page uses Cornell’s own published sources. It names no individuals involved in any case. Ithaca Share is not affiliated with the Advocacy Center.
+          Cornell’s own published sources. No individuals named. Not affiliated with the Advocacy Center.
         </p>
       </section>
 
@@ -129,7 +97,7 @@
             <a class="link" href="https://news.cornell.edu/stories/2025/11/survey-reveals-campus-sexual-assault-and-harassment#:~:text=35%25%20of%20undergraduate%20women">Cornell Chronicle, November&nbsp;4, 2025</a>
           </li>
           <li id="s5">
-            <p>Added victim advocate support; an outside review of “all related Cornell policies and practices.”</p>
+            <p>Added victim advocate support on campus.</p>
             <a class="link" href="https://statements.cornell.edu/2026/20261013-immediate-measures.cfm#:~:text=all%20related%20Cornell%20policies%20and%20practices">Cornell University statement, October&nbsp;13, 2026</a>
           </li>
         </ol>

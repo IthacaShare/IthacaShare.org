@@ -3,3 +3,5 @@ node_modules/
 .dev.vars
 .DS_Store
 og/*.png
+test-results/
+playwright-report/

@@ -25,14 +25,15 @@ Then open http://localhost:8787. Use `npm run dev`, not a file browser: pages ne
 - Give every date a year, and avoid words like "now", "this year", or "upcoming".
 - Update the page's `<meta name="updated">` date with each content change.
 - If a figure changes, update it everywhere it appears, including the meta description, `--pay-ratio` in `styles.css`, and the page's `og/<page>.html` (then run `npm run og` and bump the `?v=` on its `og:image`).
-- Pages must pass WCAG AAA: 7:1 contrast for normal text, 44px tap targets, and a visible focus outline.
+- Pages must pass WCAG 2.2 AAA: 7:1 contrast for normal text, 44px tap targets, a visible focus outline, and line height of at least 1.5. `npm test` checks these.
 
 ## Making a change
 
 1. Branch from `main`.
 2. Edit files in `public/`.
-3. Check the page locally at desktop and phone widths, and in print preview.
-4. Open a pull request with a link to the source for any new or changed figure.
+3. Run `npm test`. It checks every page for WCAG 2.2 AAA at desktop and phone widths: axe, 44px targets, focus outlines, link names, reflow, text spacing, and line length. Run `npx playwright install chromium` once first.
+4. Check the page locally at desktop and phone widths, and in print preview.
+5. Open a pull request with a link to the source for any new or changed figure.
 
 Commits must not include `Co-authored-by` trailers.
 
