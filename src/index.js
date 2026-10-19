@@ -17,7 +17,7 @@ export default {
       env.ASSETS.fetch(new URL(`/_partials/${name}`, url)).then((r) => r.text());
     const [head, nav, footer] = await Promise.all([partial("head"), partial("nav"), partial("footer")]);
 
-    const page = { title: "", description: "", canonical: "", updated: "" };
+    const page = { title: "", description: "", canonical: "", updated: "", write: "mailto:council@cityofithaca.org", label: "Write to Common Council" };
     const attr = (value) => value.replace(/"/g, "&quot;");
 
     return new HTMLRewriter()
@@ -63,11 +63,18 @@ export default {
           page.canonical = el.getAttribute("href") ?? "";
         },
       })
-      .on("a[data-council]", {
+      .on("a[data-write]", {
         element(el) {
+          const href = el.getAttribute("href") ?? page.write;
+          page.write = href;
+          page.label = "";
           const subject = encodeURIComponent(page.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
-          el.setAttribute("href", `mailto:council@cityofithaca.org?subject=${subject}&body=${encodeURIComponent(page.canonical || url.href)}`);
-          el.removeAttribute("data-council");
+          const join = href.includes("?") ? "&" : "?";
+          el.setAttribute("href", `${href}${join}subject=${subject}&body=${encodeURIComponent(page.canonical || url.href)}`);
+          el.removeAttribute("data-write");
+        },
+        text(chunk) {
+          page.label += chunk.text;
         },
       })
       .on('[data-include="nav"]', {
@@ -80,6 +87,8 @@ export default {
           const file = url.pathname.endsWith("/") ? `${url.pathname}index.html` : url.pathname;
           const subject = encodeURIComponent(page.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
           let html = footer
+            .replace("{mailto}", page.write + (page.write.includes("?") ? "&amp;" : "?"))
+            .replace("{label}", page.label.trim() || "Write to Common Council")
             .replace("{subject}", subject)
             .replace("{url}", encodeURIComponent(page.canonical || url.href))
             .replace("{edit}", `https://github.com/ithacashare/IthacaShare.org/edit/main/public${file}`);
