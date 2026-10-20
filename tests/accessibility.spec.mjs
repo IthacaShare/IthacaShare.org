@@ -177,17 +177,12 @@ test.describe("survivor services", () => {
   });
 });
 
-test("the only script is the analytics beacon, and survivor services has none", async ({ page }) => {
+test("the only script is the analytics beacon", async ({ page }) => {
   for (const path of pages) {
     const response = await page.goto(path);
     const csp = response.headers()["content-security-policy"];
     const scripts = await page.locator("script").evaluateAll((els) => els.map((el) => el.src));
-    if (path.startsWith("/survivor-services")) {
-      expect(scripts, path).toEqual([]);
-      expect(csp, path).not.toContain("script-src");
-    } else {
-      expect(scripts, path).toEqual(["https://static.cloudflareinsights.com/beacon.min.js"]);
-      expect(csp, path).toContain("script-src https://static.cloudflareinsights.com;");
-    }
+    expect(scripts, path).toEqual(["https://static.cloudflareinsights.com/beacon.min.js"]);
+    expect(csp, path).toContain("script-src https://static.cloudflareinsights.com;");
   }
 });
