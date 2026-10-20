@@ -17,6 +17,7 @@ This repo is a GitHub template for one-page, sourced sites on Cloudflare Workers
 2. In `wrangler.jsonc`, set `name` and the two custom domains.
 3. Add `og/<page>.html` for each page (`og/home.html` is the homepage), then run `npm run og` to build each page's `og.jpg` and `qr.svg`.
 4. Copy the labels: `gh label clone ithacashare/IthacaShare.org -R owner/new-repo`.
+5. In `src/index.js`, replace the Cloudflare Web Analytics token in `BEACON` with your own site's token, or remove the beacon. Then update `public/privacy/index.html` to match.
 
 ## Cloudflare setup
 
@@ -26,6 +27,7 @@ These live in dashboards, not in the repo:
 2. Run `npm run deploy` once to create the Worker and attach both custom domains.
 3. In the Worker, go to Settings, then Build, and connect the GitHub repo with branch `main`, no build command, and deploy command `npx wrangler deploy`.
 4. Leave Bot Fight Mode off so link previews can fetch the page.
-5. Add a second admin to the Cloudflare account and the GitHub org.
+5. In Web Analytics, add the site with manual setup (the Worker adds the beacon), and leave automatic setup off.
+6. Add a second admin to the Cloudflare account and the GitHub org.
 
 Licensed under [CC BY 4.0](LICENSE).

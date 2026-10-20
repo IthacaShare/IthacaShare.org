@@ -9,6 +9,8 @@
     "run_worker_first": true,
     "not_found_handling": "404-page"
   },
+  // No per-request logs or traces: public/privacy/ says we see totals only.
+  "observability": { "enabled": false, "logs": { "enabled": false }, "traces": { "enabled": false } },
   "routes": [
     { "pattern": "ithacashare.org", "custom_domain": true },
     { "pattern": "www.ithacashare.org", "custom_domain": true }
