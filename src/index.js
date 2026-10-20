@@ -2,6 +2,15 @@
 // from public/_partials/: the shared <head> tags, Open Graph tags built from
 // the page's own title, description, and canonical link, and the shared
 // header and footer. Pages hold only what is unique to them.
+//
+// Every page but survivor services also gets Cloudflare Web Analytics: one
+// cookieless beacon script, and a CSP that allows only that script and its
+// report endpoint. Survivor services stays script-free (see public/_headers).
+const BEACON =
+  '<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "ffef846d4dc74dc19facdf14c75b9884"}\'></script>\n';
+const BEACON_CSP =
+  "default-src 'none'; script-src https://static.cloudflareinsights.com; connect-src https://cloudflareinsights.com; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -17,10 +26,11 @@ export default {
       env.ASSETS.fetch(new URL(`/_partials/${name}`, url)).then((r) => r.text());
     const [head, nav, footer] = await Promise.all([partial("head"), partial("nav"), partial("footer")]);
 
+    const analytics = !url.pathname.startsWith("/survivor-services");
     const page = { title: "", description: "", canonical: "", updated: "", write: "mailto:council@cityofithaca.org", label: "Write to Common Council" };
     const attr = (value) => value.replace(/"/g, "&quot;");
 
-    return new HTMLRewriter()
+    const html = new HTMLRewriter()
       .on("head", {
         element(el) {
           el.prepend('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n', { html: true });
@@ -39,6 +49,7 @@ export default {
                 '<meta name="twitter:card" content="summary_large_image">',
               ].join("\n") + "\n";
             }
+            if (analytics) tags += BEACON;
             end.before(tags, { html: true });
           });
         },
@@ -97,5 +108,9 @@ export default {
         },
       })
       .transform(response);
+    if (!analytics) return html;
+    const headers = new Headers(html.headers);
+    headers.set("Content-Security-Policy", BEACON_CSP);
+    return new Response(html.body, { status: html.status, statusText: html.statusText, headers });
   },
 };

@@ -1,6 +1,6 @@
 # Contributing
 
-ithacashare.org is static HTML with no build step and no JavaScript in the browser.
+ithacashare.org is static HTML with no build step. The only JavaScript in the browser is the Cloudflare Web Analytics beacon, which the Worker adds to every page except survivor services.
 
 - `public/index.html` lists the proposals; each proposal is a folder, such as `public/wastewater/index.html`.
 - `public/_partials/` holds the shared `<head>` tags, header, and footer. The Worker in `src/index.js` adds them to every page as it is served, along with Open Graph tags built from each page's title, description, and canonical link.

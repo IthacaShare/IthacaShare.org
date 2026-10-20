@@ -16,6 +16,8 @@
 
 # Every page: no scripts, nothing third-party, no referrer sent to linked sites
 # (so a source site can't tell a visitor came from a page about sexual assault).
+# src/index.js loosens the CSP on every page except survivor services to allow
+# the Cloudflare Web Analytics beacon; survivor services keeps this policy.
 /*
   Content-Security-Policy: default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   Referrer-Policy: no-referrer

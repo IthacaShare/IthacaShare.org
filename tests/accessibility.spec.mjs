@@ -7,6 +7,12 @@ import AxeBuilder from "@axe-core/playwright";
 
 const pages = ["/", "/wastewater/", "/survivor-services/", "/no-such-page/"];
 
+// Keep test runs out of the site's analytics.
+const blockBeacon = (context) => context.route(/cloudflareinsights\.com/, (route) => route.abort());
+test.beforeEach(async ({ context }) => {
+  await blockBeacon(context);
+});
+
 // Everything a keyboard or pointer user can act on.
 const interactive = "a[href], button, input, select, textarea, [tabindex]:not([tabindex='-1'])";
 
@@ -96,6 +102,7 @@ for (const path of pages) {
     // reader's browser extension would.
     test("text spacing overrides do not cause overflow", async ({ browser }) => {
       const context = await browser.newContext({ bypassCSP: true, viewport: test.info().project.use.viewport });
+      await blockBeacon(context);
       const page = await context.newPage();
       await page.goto(path);
       await page.addStyleTag({
@@ -170,9 +177,17 @@ test.describe("survivor services", () => {
   });
 });
 
-test("no page uses JavaScript", async ({ page }) => {
+test("the only script is the analytics beacon, and survivor services has none", async ({ page }) => {
   for (const path of pages) {
-    await page.goto(path);
-    expect(await page.locator("script").count(), path).toBe(0);
+    const response = await page.goto(path);
+    const csp = response.headers()["content-security-policy"];
+    const scripts = await page.locator("script").evaluateAll((els) => els.map((el) => el.src));
+    if (path.startsWith("/survivor-services")) {
+      expect(scripts, path).toEqual([]);
+      expect(csp, path).not.toContain("script-src");
+    } else {
+      expect(scripts, path).toEqual(["https://static.cloudflareinsights.com/beacon.min.js"]);
+      expect(csp, path).toContain("script-src https://static.cloudflareinsights.com;");
+    }
   }
 });
