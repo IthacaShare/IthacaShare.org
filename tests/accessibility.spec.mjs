@@ -5,7 +5,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const pages = ["/", "/wastewater/", "/survivor-services/", "/no-such-page/"];
+const pages = ["/", "/wastewater/", "/survivor-services/", "/privacy/", "/no-such-page/"];
 
 // Keep test runs out of the site's analytics.
 const blockBeacon = (context) => context.route(/cloudflareinsights\.com/, (route) => route.abort());
