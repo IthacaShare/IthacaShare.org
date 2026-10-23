@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: "Source Serif 4";
+    font-weight: 400 700;
+    src: url("../public/fonts/source-serif-4-latin.woff2") format("woff2");
+  }
+  * { box-sizing: border-box; margin: 0; text-wrap: balance; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #b31b1b;
+    color: #fff7f5;
+    font-family: "Source Serif 4", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .big { font-size: 120px; line-height: 0.95; font-weight: 600; letter-spacing: -0.03em; }
+  .foot { display: flex; align-items: flex-end; justify-content: flex-end; }
+  /* Seven squares, one for each Cornell-owned house. */
+  .houses { display: flex; gap: 16px; margin-bottom: 40px; }
+  .houses span { width: 56px; height: 56px; background: #fff7f5; }
+  .url { font-size: 32px; opacity: 0.85; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="houses"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="big">Seven fraternity houses.<br>Tax-exempt<br>as educational.</div>
+  </div>
+  <div class="foot">
+    <div class="url">ithacashare.org</div>
+  </div>
+</body>
+</html>

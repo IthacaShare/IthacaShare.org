@@ -610,6 +610,20 @@ ol.sources .link {
   line-height: 1.5;
 }
 
+/* Fraternity houses: one square per Cornell-owned house, above the headline */
+.poster-houses {
+  display: flex;
+  flex: none;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.poster-houses span {
+  width: clamp(1rem, 6cqw, 2rem);
+  aspect-ratio: 1;
+  background: var(--on-red);
+}
+
 /* Side = the poster's full side / sqrt(area ratio). The inner edge keeps the exact area. */
 .poster-dot {
   flex: none;
@@ -701,6 +715,22 @@ ol.sources .link {
   aspect-ratio: 1;
   background: var(--speck);
   box-shadow: inset 0 0 0 1px var(--on-red);
+}
+
+/* The houses in miniature */
+.card-fh {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  align-content: center;
+  height: 8rem;
+  padding: 1rem;
+  background: var(--cornell-red);
+}
+
+.card-fh span {
+  aspect-ratio: 1;
+  background: var(--on-red);
 }
 
 /* The week chart in miniature: 24 hours across, 7 days down */
@@ -1091,7 +1121,6 @@ ol.sources .link {
   }
 
   .nav-links {
-    flex-wrap: nowrap;
     gap: 0 0.9rem;
     white-space: nowrap;
   }
@@ -1190,8 +1219,8 @@ th[scope="row"] {
   }
 }
 
-/* Smallest phones: shorter nav label */
-@media (max-width: 23rem) {
+/* Phones: shorter nav labels so three pages fit */
+@media (max-width: 34rem) {
   .nav-long {
     display: none;
   }
