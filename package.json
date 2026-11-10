@@ -5,6 +5,8 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "og": "node og/build.mjs",
+    "check": "node scripts/check.mjs",
+    "archive": "node scripts/archive.mjs",
     "test": "playwright test"
   },
   "devDependencies": {
