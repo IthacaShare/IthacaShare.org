@@ -391,16 +391,16 @@ section h2 + dl {
 
 .bars .bar {
   display: inline-block;
-  width: calc(var(--share) / 0.068 * 8rem);
+  width: calc(var(--share) / 0.055 * 8rem);
   height: 0.75rem;
   margin-right: 0.6rem;
   vertical-align: middle;
   background: var(--ink);
 }
 
-.bars .yale { --share: 0.068; }
-.bars .cornell { --share: 0.043; }
-.bars .princeton { --share: 0.016; }
+.bars .yale { --share: 0.055; }
+.bars .cornell { --share: 0.037; }
+.bars .princeton { --share: 0.014; }
 
 .bars .this .bar {
   background: var(--cornell-red);
@@ -543,8 +543,8 @@ ol.sources .link {
 }
 
 .poster {
-  /* Payout / voluntary payments: $439,000,000 / $5,075,000. Edit both to resize the square. */
-  --pay-ratio: sqrt(439000000 / 5075000);
+  /* Payout / voluntary payments: $494,000,000 / $5,075,000. Edit both to resize the square. */
+  --pay-ratio: sqrt(494000000 / 5075000);
   --pad: clamp(1.25rem, 4svw, 2.75rem);
   container-type: inline-size;
   aspect-ratio: 1;
@@ -711,7 +711,7 @@ ol.sources .link {
 }
 
 .card-ww span {
-  width: calc((8rem - 1.2rem) / sqrt(439000000 / 5075000));
+  width: calc((8rem - 1.2rem) / sqrt(494000000 / 5075000));
   aspect-ratio: 1;
   background: var(--speck);
   box-shadow: inset 0 0 0 1px var(--on-red);
