@@ -117,60 +117,41 @@ figcaption {
   top: 0.5rem;
 }
 
-/* Languages: one row above the site nav, each name in its own language */
-.lang-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0 0.5rem;
-  width: 100%;
-  max-width: var(--page);
-  margin: 0 auto;
-  padding: 0.25rem var(--gutter) 0;
-  font-size: 0.9375rem;
-}
-
-.lang-nav a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  padding-inline: 0.4rem;
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.lang-nav a:hover,
-.lang-nav a[aria-current] {
-  color: var(--ink);
-  text-decoration: underline 2px var(--cornell-red);
-  text-underline-offset: 6px;
-}
-
+/* The site's name and the languages on one row, the pages on the next */
+.masthead,
 .site-nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
   width: 100%;
   max-width: var(--page);
   margin: 0 auto;
-  padding: 0.25rem var(--gutter) 0.9rem;
-  border-bottom: 1px solid var(--rule);
+  padding-inline: var(--gutter);
   font-size: 1rem;
 }
 
-.site-nav a {
-  min-height: 44px;
+.masthead {
+  justify-content: space-between;
+  column-gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.site-nav {
+  column-gap: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header a {
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-brand {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-height: 44px;
   font-weight: 600;
 }
 
@@ -181,21 +162,39 @@ figcaption {
   background: var(--cornell-red) linear-gradient(var(--speck), var(--speck)) no-repeat 18% 82% / 22% 22%;
 }
 
-.nav-links {
+/* Each language in its own name. The row ends flush with the column: the last link's padding hangs outside it. */
+.lang-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
+  margin-inline-end: -0.5rem;
+  font-size: 0.9375rem;
 }
 
-.nav-links a {
-  display: inline-block;
-  min-width: 44px; /* short names, as in Chinese, still make a 44px target */
-  padding-block: 0.6rem; /* 44px tap height */
+.lang-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding-inline: 0.5rem;
   color: var(--muted);
 }
 
-.nav-links a:hover,
-.nav-links a[aria-current="page"] {
+.lang-nav a[aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.site-nav a {
+  display: inline-block;
+  min-width: 44px; /* short names, as in Chinese, still make a 44px target */
+  padding-block: calc((45px - 1.6em) / 2); /* at least 44px tall at any text size */
+  color: var(--muted);
+}
+
+.lang-nav a:hover,
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
   color: var(--ink);
   text-decoration: underline 2px var(--cornell-red);
   text-underline-offset: 6px;
@@ -568,7 +567,7 @@ ol.sources .link {
 /* Poster: the endowment payout as a red square, local payments as a black square, same scale */
 
 .poster-screen {
-  min-height: calc(100svh - 7rem); /* first screen, under the header */
+  min-height: calc(100svh - 6.6rem); /* first screen, under the header */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -581,7 +580,7 @@ ol.sources .link {
   --pad: clamp(1.25rem, 4svw, 2.75rem);
   container-type: inline-size;
   aspect-ratio: 1;
-  width: min(92vw, calc(100svh - 9rem), var(--page));
+  width: min(92vw, calc(100svh - 8.6rem), var(--page));
   margin: 0;
   padding: var(--pad);
   display: flex;
@@ -627,6 +626,7 @@ ol.sources .link {
 
 .poster-foot p {
   margin: 0;
+  text-wrap: balance;
   font-size: 1.5rem; /* 24px is large text: 4.5:1 on Cornell red */
   line-height: 1.5 !important;
 }
@@ -1141,20 +1141,9 @@ ol.sources .link {
     line-height: 1.5;
   }
 
-  /* One-line nav */
   .site-nav {
-    flex-wrap: nowrap;
-    gap: 0.75rem;
+    column-gap: 0.75rem;
     font-size: 0.9375rem;
-  }
-
-  .nav-brand {
-    white-space: nowrap;
-  }
-
-  .nav-links {
-    gap: 0 0.9rem;
-    white-space: nowrap;
   }
 
   .column > h1 {
@@ -1168,7 +1157,7 @@ ol.sources .link {
   }
 }
 
-/* Phones: the mark alone links home, so both page names fit on one line */
+/* Phones: the mark alone links home, so the languages fit beside it */
 @media (max-width: 34rem) {
   .brand-name {
     position: absolute;
@@ -1186,6 +1175,23 @@ ol.sources .link {
 
   .nav-brand {
     min-width: 44px;
+  }
+
+  .lang-nav {
+    margin-inline-end: -0.375rem;
+    font-size: 0.875rem;
+  }
+
+  .lang-nav a {
+    padding-inline: 0.375rem;
+  }
+}
+
+/* The narrowest phones: page names a size smaller, so they stay on one line */
+@media (max-width: 24.5rem) {
+  .site-nav {
+    column-gap: 0.6rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -1255,6 +1261,13 @@ th[scope="row"] {
 @media (max-width: 34rem) {
   .nav-long {
     display: none;
+  }
+}
+
+/* The Spanish names fit in full on all but the narrowest phones */
+@media (min-width: 23.4rem) {
+  :lang(es) .nav-long {
+    display: inline;
   }
 }
 
@@ -1374,6 +1387,16 @@ th[scope="row"] {
   line-height: 1.25;
 }
 
+/* Chinese characters are a full em wide and Arabic lines stand taller: a smaller
+   headline keeps the poster's sentences whole. 24px is still large text on Cornell red. */
+:lang(zh) .poster h1 {
+  font-size: clamp(1.6rem, 7.4cqw, 4.5rem);
+}
+
+:lang(ar) .poster h1 {
+  font-size: clamp(2rem, 7.4cqw, 4.5rem);
+}
+
 /* Right to left: the arrow points the reading way; the week still runs midnight to midnight, left to right */
 [dir="rtl"] .card-more::after {
   content: " \2190";
@@ -1381,12 +1404,4 @@ th[scope="row"] {
 
 [dir="rtl"] :is(.week-chart, .card-sv) {
   direction: ltr;
-}
-
-/* Translated nav labels run longer than the English: let them wrap on phones */
-@media (max-width: 34rem) {
-  :root:not(:lang(en)) :is(.site-nav, .nav-links) {
-    flex-wrap: wrap;
-    white-space: normal;
-  }
 }

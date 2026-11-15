@@ -2,7 +2,8 @@
 //
 //   npm run check             every source has an archived copy, no review
 //                             date has passed, the sitemap matches each page,
-//                             every translation matches its English page
+//                             every translation matches its English page,
+//                             figure for figure
 //   npm run check -- --links  also requests every source link and reports
 //                             the ones that are gone
 //
@@ -63,6 +64,41 @@ for (const path of pages().filter((path) => !isTranslation(path))) {
     if (list(html, /href="#(s\d+)"/g) !== list(english, /href="#(s\d+)"/g)) problems.push(`${copy} does not have the same footnotes, in the same order, as ${path}.`);
     if (list(html, /href="(https?:\/\/(?!ithacashare\.org\/)[^"]+)"/g) !== list(english, /href="(https?:\/\/(?!ithacashare\.org\/)[^"]+)"/g)) problems.push(`${copy} does not link to the same sources and archived copies as ${path}.`);
     if (list(html, /data-review="([^"]*)"/g) !== list(english, /data-review="([^"]*)"/g)) problems.push(`${copy} does not have the same data-review dates as ${path}.`);
+  }
+}
+
+// Every figure in an English page appears in each translation the same number
+// of times. Amounts are compared by value, so $13.6 billion matches 13,600
+// millones, 13.6 مليار, and 136亿. Chinese dates write the month as a number, and
+// the week chart's hour labels follow each language's clock; both are left out.
+const UNITS = { billion: 1e9, B: 1e9, مليار: 1e9, 亿: 1e8, 万: 1e4, million: 1e6, M: 1e6, millones: 1e6, "mill.": 1e6, مليون: 1e6, ملايين: 1e6 };
+function figures(html) {
+  const text = html
+    .replace(/<meta (?:name="description"|property="og:image:alt") content="([^"]*)">/g, " $1 ")
+    .replace(/<div class="week-hours"[\s\S]*?<\/div>/g, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\d{1,2}月/g, " ")
+    .replace(/(\d)多(?=[万亿])/g, "$1");
+  const found = new Map();
+  const unitAt = (rest) => rest.match(/^(?:[BM](?![\p{L}\d])|(?:&nbsp;|\s)*(?:billion\b|million\b|millones|mill\.|مليار|مليون|ملايين|亿|万))/u)?.[0].replace(/&nbsp;|\s/g, "");
+  for (const m of text.matchAll(/\d[\d,]*(?:\.\d+)?/g)) {
+    // In a range such as "$15.5 to $32.5 million", the first amount takes the second's unit.
+    const rest = text.slice(m.index + m[0].length);
+    const range = rest.match(/^(?:&nbsp;|\s)+(?:to|a|y|إلى)(?:&nbsp;|\s)+\$?\d[\d,]*(?:\.\d+)?/)?.[0];
+    const unit = unitAt(rest) ?? (range && unitAt(rest.slice(range.length)));
+    const value = String(Math.round(Number(m[0].replace(/,/g, "")) * (UNITS[unit] ?? 1) * 1000) / 1000);
+    found.set(value, (found.get(value) ?? 0) + 1);
+  }
+  return found;
+}
+for (const path of pages().filter((path) => !isTranslation(path))) {
+  const english = figures(read(path));
+  for (const code of translations.filter((code) => exists(translated(path, code)))) {
+    const copy = figures(read(translated(path, code)));
+    for (const value of new Set([...english.keys(), ...copy.keys()])) {
+      const [here, there] = [english.get(value) ?? 0, copy.get(value) ?? 0];
+      if (here !== there) problems.push(`${translated(path, code)} has the figure ${Number(value).toLocaleString("en-US")} ${there} time${there === 1 ? "" : "s"}; ${path} has it ${here}.`);
+    }
   }
 }
 
