@@ -104,7 +104,7 @@ figcaption {
 
 .skip-link {
   position: absolute;
-  left: 0.5rem;
+  inset-inline-start: 0.5rem;
   top: -4rem;
   z-index: 20;
   padding: 0.75rem 1rem;
@@ -117,6 +117,37 @@ figcaption {
   top: 0.5rem;
 }
 
+/* Languages: one row above the site nav, each name in its own language */
+.lang-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 0.5rem;
+  width: 100%;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0.25rem var(--gutter) 0;
+  font-size: 0.9375rem;
+}
+
+.lang-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding-inline: 0.4rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.lang-nav a:hover,
+.lang-nav a[aria-current] {
+  color: var(--ink);
+  text-decoration: underline 2px var(--cornell-red);
+  text-underline-offset: 6px;
+}
+
 .site-nav {
   display: flex;
   flex-wrap: wrap;
@@ -126,7 +157,7 @@ figcaption {
   width: 100%;
   max-width: var(--page);
   margin: 0 auto;
-  padding: 0.9rem var(--gutter);
+  padding: 0.25rem var(--gutter) 0.9rem;
   border-bottom: 1px solid var(--rule);
   font-size: 1rem;
 }
@@ -158,6 +189,7 @@ figcaption {
 
 .nav-links a {
   display: inline-block;
+  min-width: 44px; /* short names, as in Chinese, still make a 44px target */
   padding-block: 0.6rem; /* 44px tap height */
   color: var(--muted);
 }
@@ -329,15 +361,15 @@ section h2 + dl {
 
 .ask {
   margin: 2.5rem 0 0;
-  padding-left: 1rem;
-  border-left: 6px solid var(--cornell-red);
+  padding-inline-start: 1rem;
+  border-inline-start: 6px solid var(--cornell-red);
   font-size: 1.375rem;
   line-height: 1.5;
   text-wrap: pretty;
 }
 
 .ask.quiet {
-  border-left-color: var(--ink);
+  border-inline-start-color: var(--ink);
 }
 
 /* Cornell's own words: the quote large, who said it and about what underneath */
@@ -393,7 +425,7 @@ section h2 + dl {
   display: inline-block;
   width: calc(var(--share) / 0.055 * 8rem);
   height: 0.75rem;
-  margin-right: 0.6rem;
+  margin-inline-end: 0.6rem;
   vertical-align: middle;
   background: var(--ink);
 }
@@ -451,9 +483,10 @@ table {
 
 th,
 td {
-  padding: 0.4rem 0.5rem 0.4rem 0;
+  padding-block: 0.4rem;
+  padding-inline: 0 0.5rem;
   border-bottom: 1px solid var(--rule);
-  text-align: left;
+  text-align: start;
   vertical-align: top;
 }
 
@@ -465,14 +498,14 @@ th {
 
 th:last-child,
 td:last-child {
-  padding-right: 0;
-  text-align: right;
+  padding-inline-end: 0;
+  text-align: end;
 }
 
 /* Footnotes and sources */
 
 .fn {
-  margin-left: 0.05em;
+  margin-inline-start: 0.05em;
   font-size: 0.7em;
   line-height: 0;
   vertical-align: super;
@@ -492,7 +525,7 @@ td:last-child {
 
 ol.sources {
   margin: 1rem 0 0;
-  padding-left: 1.75rem;
+  padding-inline-start: 1.75rem;
   font-size: 1rem;
   font-variant-numeric: lining-nums;
 }
@@ -535,7 +568,7 @@ ol.sources .link {
 /* Poster: the endowment payout as a red square, local payments as a black square, same scale */
 
 .poster-screen {
-  min-height: calc(100svh - 4.6rem); /* first screen, under the header */
+  min-height: calc(100svh - 7rem); /* first screen, under the header */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -548,7 +581,7 @@ ol.sources .link {
   --pad: clamp(1.25rem, 4svw, 2.75rem);
   container-type: inline-size;
   aspect-ratio: 1;
-  width: min(92vw, calc(100svh - 6.6rem), var(--page));
+  width: min(92vw, calc(100svh - 9rem), var(--page));
   margin: 0;
   padding: var(--pad);
   display: flex;
@@ -653,14 +686,14 @@ ol.sources .link {
   column-gap: 1.75rem;
   align-items: start;
   padding: 1.5rem;
-  border-left: 6px solid var(--cornell-red);
+  border-inline-start: 6px solid var(--cornell-red);
   background: #fff;
   color: var(--ink);
   text-decoration: none;
 }
 
 .proposals li:nth-child(2) a {
-  border-left-color: var(--ink);
+  border-inline-start-color: var(--ink);
 }
 
 .proposals a:hover h2,
@@ -1001,9 +1034,8 @@ ol.sources .link {
 @media (min-width: 72rem) {
   .quick-exit {
     top: 0.6rem;
-    right: 0.6rem;
+    inset-inline: auto 0.6rem;
     bottom: auto;
-    left: auto;
     min-height: 44px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
   }
@@ -1202,13 +1234,13 @@ th[scope="row"] {
   }
 
   td {
-    text-align: right;
+    text-align: end;
   }
 
   td::before {
     content: attr(data-label);
-    float: left;
-    margin-right: 1rem;
+    float: inline-start;
+    margin-inline-end: 1rem;
     color: var(--muted);
     font-weight: 400;
     white-space: nowrap;
@@ -1314,4 +1346,47 @@ th[scope="row"] {
 
 .site-footer .button:hover {
   background: var(--red);
+}
+
+/* Translations. Arabic and Chinese text falls to the reader's own fonts; Latin
+   letters and figures stay in Source Serif. */
+
+:root:lang(ar) {
+  --serif: "Source Serif 4", "Noto Naskh Arabic", "Geeza Pro", "Segoe UI", Tahoma, serif;
+}
+
+:root:lang(zh) {
+  --serif: "Source Serif 4", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
+}
+
+/* Arabic letters join, so no letter spacing; both scripts need taller headline lines */
+:lang(ar) :is(h1, h2, .call) {
+  letter-spacing: 0;
+}
+
+:lang(ar) .column > h1,
+:lang(ar) .poster h1 {
+  line-height: 1.4;
+}
+
+:lang(zh) .column > h1,
+:lang(zh) .poster h1 {
+  line-height: 1.25;
+}
+
+/* Right to left: the arrow points the reading way; the week still runs midnight to midnight, left to right */
+[dir="rtl"] .card-more::after {
+  content: " \2190";
+}
+
+[dir="rtl"] :is(.week-chart, .card-sv) {
+  direction: ltr;
+}
+
+/* Translated nav labels run longer than the English: let them wrap on phones */
+@media (max-width: 34rem) {
+  :root:not(:lang(en)) :is(.site-nav, .nav-links) {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
 }

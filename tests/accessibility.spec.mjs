@@ -4,8 +4,11 @@
 // text spacing, and visual presentation.
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { translations } from "../scripts/pages.mjs";
 
-const pages = ["/", "/wastewater/", "/survivor-services/", "/fraternity-houses/", "/privacy/", "/no-such-page/"];
+// Every page, in English and in each translation.
+const english = ["/", "/wastewater/", "/survivor-services/", "/fraternity-houses/", "/privacy/", "/no-such-page/"];
+const pages = ["", ...translations.map((code) => `/${code}`)].flatMap((prefix) => english.map((path) => `${prefix}${path}`));
 
 // Keep test runs out of the site's analytics.
 const blockBeacon = (context) => context.route(/cloudflareinsights\.com/, (route) => route.abort());
@@ -62,7 +65,7 @@ for (const path of pages) {
       );
       for (const { name, href } of links) {
         expect(name, href).not.toBe("");
-        if (href.startsWith("tel:")) expect(name, `phone link ${href} names who it calls`).toMatch(/[A-Za-z]/);
+        if (href.startsWith("tel:")) expect(name, `phone link ${href} names who it calls`).toMatch(/\p{L}/u);
       }
       const byName = new Map();
       for (const { name, href } of links) {

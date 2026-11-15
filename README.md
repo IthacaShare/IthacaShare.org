@@ -1,6 +1,6 @@
 # ithacashare.org
 
-Sourced, one-page proposals for what Cornell could fund in Ithaca. The homepage (`public/index.html`) lists them; each proposal is its own page, such as `public/wastewater/index.html`.
+Sourced, one-page proposals for what Cornell could fund in Ithaca. The homepage (`public/index.html`) lists them; each proposal is its own page, such as `public/wastewater/index.html`. Every page is also translated into Spanish (`public/es/`), Arabic (`public/ar/`), and Chinese (`public/zh/`).
 
 ```sh
 npm install
@@ -15,7 +15,7 @@ This repo is a GitHub template for one-page, sourced sites on Cloudflare Workers
 
 1. Edit `public/index.html` (the list of proposals) and add one folder per proposal under `public/`. In each page, set the canonical link, `og:url`, `og:image`, the issues link in the footer, and, if it has a scaled square, the two amounts in `--pay-ratio` in `public/styles.css`. Edit the shared header and footer in `public/_partials/`.
 2. In `wrangler.jsonc`, set `name` and the two custom domains.
-3. Add each page to `public/_partials/nav.html`, `public/sitemap.xml`, and the `pages` list in `tests/accessibility.spec.mjs`.
+3. Add each page to `public/_partials/nav.html`, `public/sitemap.xml`, and the `english` list in `tests/accessibility.spec.mjs`. For an English-only site, delete `public/es/`, `public/ar/`, `public/zh/`, and their folders in `public/_partials/`, and cut `LANGUAGES` in `src/index.js` and `translations` in `scripts/pages.mjs` down to English.
 4. Add `og/<page>.html` for each page (`og/home.html` is the homepage), then run `npm run og` to build each page's `og.jpg` and `qr.svg`.
 5. Copy the labels: `gh label clone ithacashare/IthacaShare.org -R owner/new-repo`.
 6. In `src/index.js`, replace the Cloudflare Web Analytics token in `BEACON` with your own site's token, or remove the beacon. Then update `public/privacy/index.html` to match.

@@ -1,6 +1,6 @@
 // Shared by check.mjs and archive.mjs: finds every page under public/ and the
 // entries in its Sources list.
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 export const root = fileURLToPath(new URL("..", import.meta.url));
@@ -16,6 +16,14 @@ export function pages(dir = "public") {
   }
   return found.sort();
 }
+
+// Translations: public/<code>/ mirrors the English pages. src/index.js has the same list.
+export const translations = ["es", "ar", "zh"];
+
+// A page's translation, as a path, and whether a path is a translation.
+export const translated = (path, code) => path.replace(/^public\//, `public/${code}/`);
+export const isTranslation = (path) => translations.some((code) => path.startsWith(`public/${code}/`));
+export const exists = (path) => existsSync(`${root}${path}`);
 
 export const read = (path) => readFileSync(`${root}${path}`, "utf8");
 

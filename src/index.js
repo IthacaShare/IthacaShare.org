@@ -3,10 +3,35 @@
 // the page's own title, description, and canonical link, and the shared
 // header and footer. Pages hold only what is unique to them.
 //
+// Translations live under public/<code>/ with their own partials in
+// public/_partials/<code>/. Every page gets links to itself in each language.
+//
 // Every page also gets Cloudflare Web Analytics: one cookieless beacon script.
 // public/_headers allows only that script and its report endpoint.
 const BEACON =
   '<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "ffef846d4dc74dc19facdf14c75b9884"}\'></script>\n';
+
+// Each language's URL prefix, lang attribute, and name for itself.
+const LANGUAGES = [
+  { code: "en", tag: "en", name: "English" },
+  { code: "es", tag: "es", name: "Español" },
+  { code: "ar", tag: "ar", name: "العربية" },
+  { code: "zh", tag: "zh-Hans", name: "中文" },
+];
+const ORIGIN = "https://ithacashare.org";
+
+// Pages give their date as "November 10, 2026"; translations show it in their own language.
+const MONTHS = {
+  es: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+  ar: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+};
+function localDate(english, code) {
+  const date = new Date(`${english} 12:00`);
+  if (code === "en" || isNaN(date)) return english;
+  const [day, month, year] = [date.getDate(), date.getMonth(), date.getFullYear()];
+  if (code === "zh") return `${year}年${month + 1}月${day}日`;
+  return code === "es" ? `${day} de ${MONTHS.es[month]} de ${year}` : `${day} ${MONTHS.ar[month]} ${year}`;
+}
 
 export default {
   async fetch(request, env) {
@@ -19,12 +44,30 @@ export default {
     const response = await env.ASSETS.fetch(request);
     if (!response.headers.get("content-type")?.includes("text/html")) return response;
 
-    const partial = (name) =>
-      env.ASSETS.fetch(new URL(`/_partials/${name}`, url)).then((r) => r.text());
-    const [head, nav, footer] = await Promise.all([partial("head"), partial("nav"), partial("footer")]);
+    // The page's language, and its path without the language prefix. A missing
+    // page's language links go to each homepage.
+    const lang = LANGUAGES.find(({ code }) => url.pathname.startsWith(`/${code}/`)) ?? LANGUAGES[0];
+    const path = response.status === 404 ? "/" : lang.code === "en" ? url.pathname : url.pathname.slice(lang.code.length + 1);
+    const prefix = (code) => (code === "en" ? "" : `/${code}`);
 
-    const page = { title: "", description: "", canonical: "", updated: "", write: "mailto:council@cityofithaca.org", label: "Write to Common Council" };
+    const asset = (pathname) => env.ASSETS.fetch(new URL(pathname, url)).then((r) => (r.ok ? r.text() : ""));
+    const partial = (name, code = "en") => asset(`/_partials${prefix(code)}/${name}`);
+    // Emails go to English-speaking offices: a translated page's email carries the English page's title and address.
+    const [head, nav, footer, english] = await Promise.all([
+      partial("head"),
+      partial("nav", lang.code),
+      partial("footer", lang.code),
+      lang.code === "en" ? "" : asset(path),
+    ]);
+    const englishTitle = english.match(/<title>([^<]*)<\/title>/)?.[1];
+
+    const page = { title: "", description: "", canonical: "", updated: "", write: "mailto:council@cityofithaca.org", label: "" };
     const attr = (value) => value.replace(/"/g, "&quot;");
+    const subject = () => encodeURIComponent((englishTitle ?? page.title).replace(/&amp;/g, "&").replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
+    const link = () => encodeURIComponent(page.canonical ? `${ORIGIN}${path}` : url.href);
+    const languages = LANGUAGES.map(({ code, tag, name }) =>
+      `<a href="${prefix(code)}${path}" lang="${tag}" hreflang="${tag}"${code === lang.code ? ' aria-current="true"' : ""}>${name}</a>`,
+    ).join("\n    ");
 
     return new HTMLRewriter()
       .on("head", {
@@ -43,6 +86,8 @@ export default {
                 '<meta property="og:image:width" content="1200">',
                 '<meta property="og:image:height" content="630">',
                 '<meta name="twitter:card" content="summary_large_image">',
+                ...LANGUAGES.map(({ code, tag }) => `<link rel="alternate" hreflang="${tag}" href="${ORIGIN}${prefix(code)}${path}">`),
+                `<link rel="alternate" hreflang="x-default" href="${ORIGIN}${path}">`,
               ].join("\n") + "\n";
             }
             end.before(tags + BEACON, { html: true });
@@ -74,9 +119,8 @@ export default {
           const href = el.getAttribute("href") ?? page.write;
           page.write = href;
           page.label = "";
-          const subject = encodeURIComponent(page.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
           const join = href.includes("?") ? "&" : "?";
-          el.setAttribute("href", `${href}${join}subject=${subject}&body=${encodeURIComponent(page.canonical || url.href)}`);
+          el.setAttribute("href", `${href}${join}subject=${subject()}&body=${link()}`);
           el.removeAttribute("data-write");
         },
         text(chunk) {
@@ -85,20 +129,21 @@ export default {
       })
       .on('[data-include="nav"]', {
         element(el) {
-          el.replace(nav.replace(`href="${url.pathname}"`, `href="${url.pathname}" aria-current="page"`), { html: true });
+          el.replace(nav.replace(`href="${url.pathname}"`, `href="${url.pathname}" aria-current="page"`).replace("{languages}", languages), { html: true });
         },
       })
       .on('[data-include="footer"]', {
         element(el) {
           const file = url.pathname.endsWith("/") ? `${url.pathname}index.html` : url.pathname;
-          const subject = encodeURIComponent(page.title.replace(/^Ithaca Share: ?/, "") || "Cornell and Ithaca");
+          // {label|Write to Common Council}: the page's own button label, or the words after the bar.
           let html = footer
             .replace("{mailto}", page.write + (page.write.includes("?") ? "&amp;" : "?"))
-            .replace("{label}", page.label.trim() || "Write to Common Council")
-            .replace("{subject}", subject)
-            .replace("{url}", encodeURIComponent(page.canonical || url.href))
+            .replace(/\{label\|([^}]*)\}/, (_, fallback) => page.label.trim() || fallback)
+            .replace("{subject}", subject())
+            .replace("{url}", link())
+            .replace("{english}", path)
             .replace("{edit}", `https://github.com/ithacashare/IthacaShare.org/edit/main/public${file}`);
-          html = page.updated ? html.replace("{updated}", page.updated) : html.replace(/\s*<li>Updated \{updated\}\.<\/li>/, "");
+          html = page.updated ? html.replace("{updated}", localDate(page.updated, lang.code)) : html.replace(/\s*<li>[^<]*\{updated\}[^<]*<\/li>/, "");
           el.replace(html, { html: true });
         },
       })

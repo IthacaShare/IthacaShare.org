@@ -1,7 +1,8 @@
 // Checks the content rules that the accessibility tests can't see.
 //
 //   npm run check             every source has an archived copy, no review
-//                             date has passed, the sitemap matches each page
+//                             date has passed, the sitemap matches each page,
+//                             every translation matches its English page
 //   npm run check -- --links  also requests every source link and reports
 //                             the ones that are gone
 //
@@ -9,7 +10,7 @@
 //   <span data-review="2026-11-18">Budget vote: November 17, 2026.</span>
 // The check fails from that day on, until the line is updated and the
 // attribute is moved or removed.
-import { pages, read, sources, lineOf } from "./pages.mjs";
+import { pages, read, sources, lineOf, translations, translated, isTranslation, exists } from "./pages.mjs";
 
 const problems = [];
 const warnings = [];
@@ -40,6 +41,28 @@ for (const path of pages()) {
     const date = new Date(`${updated} 12:00`).toLocaleDateString("en-CA");
     if (!lastmod) problems.push(`${path} is not in public/sitemap.xml.`);
     else if (lastmod !== date) problems.push(`${path} says updated ${updated}, but public/sitemap.xml says ${lastmod}.`);
+  }
+}
+
+// A translation keeps the English page's "updated" date, in English. When the
+// English page changes and its date moves, its translations are out of date
+// until they are changed to match. They also keep its sources and review dates.
+const updatedOf = (html) => html.match(/<meta name="updated" content="([^"]+)">/)?.[1];
+const list = (html, pattern) => [...html.matchAll(pattern)].map((m) => m[1]).join(" ");
+for (const path of pages().filter((path) => !isTranslation(path))) {
+  const english = read(path);
+  for (const code of translations) {
+    const copy = translated(path, code);
+    if (!exists(copy)) {
+      problems.push(`${copy} is missing: ${path} has no ${code} translation.`);
+      continue;
+    }
+    const html = read(copy);
+    if (updatedOf(html) !== updatedOf(english)) problems.push(`${copy} translates the ${updatedOf(html)} version of ${path}, updated ${updatedOf(english)}. Bring the translation up to date, then copy the date.`);
+    if (list(html, /<li id="(s\d+)">/g) !== list(english, /<li id="(s\d+)">/g)) problems.push(`${copy} does not list the same sources as ${path}.`);
+    if (list(html, /href="#(s\d+)"/g) !== list(english, /href="#(s\d+)"/g)) problems.push(`${copy} does not have the same footnotes, in the same order, as ${path}.`);
+    if (list(html, /href="(https?:\/\/(?!ithacashare\.org\/)[^"]+)"/g) !== list(english, /href="(https?:\/\/(?!ithacashare\.org\/)[^"]+)"/g)) problems.push(`${copy} does not link to the same sources and archived copies as ${path}.`);
+    if (list(html, /data-review="([^"]*)"/g) !== list(english, /data-review="([^"]*)"/g)) problems.push(`${copy} does not have the same data-review dates as ${path}.`);
   }
 }
 
